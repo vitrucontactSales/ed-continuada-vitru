@@ -3,105 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ed. Continuada — Vitru Contact Sales</title>
+<title>Closers — Uniasselvi</title>
+<link rel="icon" type="image/png" href="Logo_Uniasselvi.png">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 42 42'><rect width='42' height='42' fill='%231A0D38' rx='8'/><text x='21' y='28' font-size='22' text-anchor='middle' fill='%23F5C518' font-family='sans-serif' font-weight='bold'>✦</text></svg>">
 <style>
 :root {
-  --bg:      #0F0720;
-  --card:    #1A0D38;
-  --card2:   #231450;
-  --borda:   #3D2A6B;
-  --borda-f: #6D4DB0;
-  --violet:  #8B5CF6;
-  --violet-d:#7C3AED;
-  --gold:    #F5C518;
-  --gold-d:  #D4A800;
-  --txt:     #F0E6FF;
-  --txt2:    #B09DC8;
-  --txt3:    #7A6898;
-  --vermelho:#FF5555;
-  --verde:   #2ECC71;
-  --shadow:  0 4px 32px rgba(0,0,0,.5);
-  --r:       12px;
+  --amarelo:   #FFD400;
+  --amarelo-d: #E6BE00;
+  --amarelo-g: rgba(255,212,0,.08);
+  --bg:        #0F0F0F;
+  --card:      #1A1A1A;
+  --card2:     #222222;
+  --input-bg:  #262626;
+  --borda:     #333333;
+  --borda-f:   #444444;
+  --txt:       #F0F0F0;
+  --txt2:      #999999;
+  --txt3:      #666666;
+  --vermelho:  #FF5555;
+  --verde:     #2ECC71;
+  --shadow:    0 4px 32px rgba(0,0,0,.5);
+  --r:         12px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Nunito Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--txt); }
 
+/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--card); }
 ::-webkit-scrollbar-thumb { background: var(--borda-f); border-radius: 3px; }
 
 /* ── Header ── */
 header {
-  background: #0A0418;
+  background: #000;
   padding: 0 32px;
   display: flex; align-items: center; justify-content: space-between;
   height: 68px;
-  border-bottom: 2px solid var(--violet-d);
+  border-bottom: 2px solid var(--amarelo);
   position: sticky; top: 0; z-index: 100;
 }
 .logo-area { display: flex; align-items: center; gap: 14px; }
-.logo-vitru {
-  width: 42px; height: 42px;
-  background: var(--card2); border-radius: 8px; border: 1.5px solid var(--borda-f);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem;
-}
-.h-title { font-family: 'Nunito', sans-serif; color: var(--txt); font-size: 1.12rem; font-weight: 800; line-height: 1.2; }
-.h-title span { color: var(--gold); }
-.h-sub { color: var(--violet); font-size: .72rem; font-weight: 700; letter-spacing: .06em; }
+.h-title { font-family: 'Nunito', sans-serif; color: #fff; font-size: 1.12rem; font-weight: 800; line-height: 1.2; }
+.h-sub { color: var(--amarelo); font-size: .72rem; font-weight: 700; letter-spacing: .06em; }
 .nav-links { display: flex; gap: 10px; }
 .nav-btn {
-  color: var(--txt2); background: transparent;
-  border: 1.5px solid var(--borda-f); border-radius: 8px; padding: 8px 16px;
+  color: #000; background: var(--amarelo); border: none;
+  border-radius: 8px; padding: 8px 16px;
   font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .82rem;
-  cursor: pointer; transition: all .2s; text-decoration: none;
+  cursor: pointer; transition: all .2s;
 }
-.nav-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(245,197,24,.06); }
-.nav-btn.primary { background: var(--gold); color: #000; border-color: var(--gold); }
-.nav-btn.primary:hover { background: var(--gold-d); }
+.nav-btn:hover { background: var(--amarelo-d); transform: translateY(-1px); }
+.nav-btn.ghost {
+  background: transparent; color: var(--txt2);
+  border: 1.5px solid var(--borda-f);
+}
+.nav-btn.ghost:hover { border-color: var(--amarelo); color: var(--amarelo); background: var(--amarelo-g); }
 
 /* ── Layout ── */
-.wrapper { max-width: 720px; margin: 36px auto; padding: 0 16px 60px; }
+.wrapper { max-width: 700px; margin: 36px auto; padding: 0 16px 60px; }
 .card { background: var(--card); border-radius: var(--r); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--borda); }
 
-/* ── Card Head ── */
+/* ── Card Header ── */
 .card-head {
-  background: linear-gradient(135deg, #0A0418, #1A0D38);
+  background: #000;
   padding: 28px 32px; position: relative; overflow: hidden;
-  border-bottom: 3px solid var(--violet-d);
+  border-bottom: 3px solid var(--amarelo);
 }
 .card-head::before {
-  content: '✦'; position: absolute; right: 24px; top: 50%;
-  transform: translateY(-50%); font-size: 5rem; color: rgba(245,197,24,.06);
-  font-family: sans-serif; line-height: 1;
+  content: ''; position: absolute; right: -20px; top: -20px;
+  width: 140px; height: 140px; border-radius: 50%;
+  background: var(--amarelo-g);
 }
-.card-head h1 { font-family: 'Nunito', sans-serif; color: var(--txt); font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
-.card-head h1 span { color: var(--gold); }
-.card-head p { color: var(--txt2); font-size: .82rem; }
+.card-head h1 { font-family: 'Nunito', sans-serif; color: #fff; font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+.card-head h1 span { color: var(--amarelo); }
+.card-head p { color: var(--txt3); font-size: .82rem; }
 
 .req-note {
-  padding: 10px 32px; background: rgba(139,92,246,.08);
-  border-bottom: 1px solid var(--borda); font-size: .78rem; color: var(--violet);
+  padding: 10px 32px; background: #1C1800;
+  border-bottom: 1px solid #3D3000; font-size: .78rem; color: #C8A800;
 }
 
-/* ── Form ── */
+/* ── Form Body ── */
 .body { padding: 28px 32px 24px; display: flex; flex-direction: column; gap: 20px; }
 .group { display: flex; flex-direction: column; gap: 7px; }
-.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media(max-width:560px) { .row-2 { grid-template-columns: 1fr; } }
 .label {
   font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
   color: var(--txt); display: flex; align-items: center; gap: 8px;
 }
 .num {
-  background: var(--violet-d); color: #fff;
+  background: var(--amarelo); color: #000;
   width: 22px; height: 22px; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center;
   font-size: .72rem; font-weight: 800; flex-shrink: 0;
 }
+.num-sub {
+  background: var(--borda-f); color: var(--txt2);
+  width: 22px; height: 22px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .6rem; font-weight: 800; flex-shrink: 0;
+}
 .req { color: var(--vermelho); margin-left: 2px; }
+
 .sw { position: relative; }
 .sw::after {
   content: '▾'; position: absolute; right: 13px; top: 50%;
@@ -110,47 +112,35 @@ header {
 .ctrl {
   width: 100%; padding: 11px 14px; border: 1.5px solid var(--borda);
   border-radius: 9px; font-family: 'Nunito Sans', sans-serif;
-  font-size: .92rem; color: var(--txt); background: var(--card2);
+  font-size: .92rem; color: var(--txt); background: var(--input-bg);
   transition: border-color .2s, box-shadow .2s;
   appearance: none; -webkit-appearance: none;
 }
 .ctrl:focus {
-  outline: none; border-color: var(--violet); background: #2D1A5E;
-  box-shadow: 0 0 0 3px rgba(139,92,246,.2);
+  outline: none; border-color: var(--amarelo); background: #2A2A2A;
+  box-shadow: 0 0 0 3px rgba(255,212,0,.15);
 }
 .ctrl::placeholder { color: var(--txt3); }
-.ctrl option { background: #231450; color: var(--txt); }
-textarea.ctrl { resize: vertical; min-height: 80px; }
+.ctrl option { background: #2A2A2A; color: var(--txt); }
+textarea.ctrl { resize: vertical; min-height: 90px; }
 
-/* Sub-campo Shopee */
-.sub-shopee {
-  padding: 14px 18px;
-  background: rgba(245,197,24,.05);
-  border: 1.5px solid rgba(245,197,24,.2);
-  border-left: 3px solid var(--gold);
+/* Sub-campo de modalidade */
+.sub-group {
+  margin-top: -6px;
+  padding: 16px 20px;
+  background: #1E1E00;
+  border: 1.5px solid #3D3000;
   border-radius: 10px;
-  display: flex; flex-direction: column; gap: 8px;
+  display: flex; flex-direction: column; gap: 7px;
   animation: fadeIn .2s ease;
 }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 .sub-label {
   font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .82rem;
-  color: var(--gold); display: flex; align-items: center; gap: 6px;
+  color: #C8A800; display: flex; align-items: center; gap: 7px;
 }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Bandeira badge */
-.bandeira-badge {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 12px; border-radius: 20px; font-size: .75rem; font-weight: 700;
-  margin-top: 4px; display: none;
-}
-.bandeira-badge.uni { background: rgba(255,212,0,.12); color: #FFD400; border: 1px solid rgba(255,212,0,.3); }
-.bandeira-badge.uni::before { content: ''; width:8px; height:8px; border-radius:50%; background:#FFD400; }
-.bandeira-badge.unicesumar { background: rgba(59,141,212,.12); color: #3B8DD4; border: 1px solid rgba(59,141,212,.3); }
-.bandeira-badge.unicesumar::before { content: ''; width:8px; height:8px; border-radius:50%; background:#3B8DD4; }
 
 .field-hint { display: none; margin-top: 6px; font-size: .8rem; color: var(--vermelho); font-weight: 600; }
-.divider { height: 1px; background: var(--borda); margin: 4px 0; }
 
 /* ── Footer ── */
 .foot { padding: 0 32px 28px; display: flex; justify-content: flex-end; gap: 12px; }
@@ -158,8 +148,8 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
   padding: 11px 28px; border-radius: 9px; font-family: 'Nunito', sans-serif;
   font-weight: 800; font-size: .92rem; cursor: pointer; border: none; transition: all .2s;
 }
-.btn-p { background: var(--gold); color: #000; box-shadow: 0 3px 12px rgba(245,197,24,.3); }
-.btn-p:hover { background: var(--gold-d); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(245,197,24,.45); }
+.btn-p { background: var(--amarelo); color: #000; box-shadow: 0 3px 12px rgba(255,212,0,.25); }
+.btn-p:hover { background: var(--amarelo-d); transform: translateY(-1px); box-shadow: 0 5px 18px rgba(255,212,0,.4); }
 .btn-p:disabled { opacity: .6; cursor: not-allowed; transform: none; }
 .btn-s { background: var(--card2); color: var(--txt2); border: 1.5px solid var(--borda-f); }
 .btn-s:hover { background: var(--borda); }
@@ -175,7 +165,7 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
 }
 .toast.show { transform: translateY(0); opacity: 1; }
 
-/* ── Modal ── */
+/* ── Modais ── */
 .modal-overlay {
   display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75);
   z-index: 1000; align-items: center; justify-content: center;
@@ -185,7 +175,7 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
   background: var(--card); border-radius: var(--r); padding: 36px 32px;
   width: 340px; box-shadow: var(--shadow);
   font-family: 'Nunito', sans-serif;
-  border: 1px solid var(--borda); border-top: 3px solid var(--gold);
+  border: 1px solid var(--borda); border-top: 3px solid var(--amarelo);
 }
 .modal-box h3 { color: var(--txt); font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
 .modal-box p { color: var(--txt2); font-size: .82rem; margin-bottom: 18px; }
@@ -193,217 +183,251 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
   width: 100%; padding: 11px 14px; border: 1.5px solid var(--borda);
   border-radius: 9px; font-size: .92rem; margin-bottom: 14px;
   font-family: 'Nunito Sans', sans-serif;
-  background: var(--card2); color: var(--txt);
+  background: var(--input-bg); color: var(--txt);
 }
-.modal-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,197,24,.15); }
+.modal-input:focus { outline: none; border-color: var(--amarelo); box-shadow: 0 0 0 3px rgba(255,212,0,.15); }
 .modal-erro { color: var(--vermelho); font-size: .8rem; margin-bottom: 10px; display: none; }
 .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* Modal colaborador */
+.modal-box-lg {
+  background: var(--card); border-radius: var(--r); padding: 36px 32px;
+  width: 540px; max-width: 95vw; box-shadow: var(--shadow);
+  font-family: 'Nunito', sans-serif; max-height: 90vh; overflow-y: auto;
+  border: 1px solid var(--borda); border-top: 3px solid var(--amarelo);
+}
+.modal-box-lg h3 { color: var(--txt); font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
+.modal-box-lg p { color: var(--txt2); font-size: .82rem; margin-bottom: 20px; }
+.colab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+@media(max-width:500px) { .colab-grid { grid-template-columns: 1fr; } }
+.colab-group { display: flex; flex-direction: column; gap: 5px; }
+.colab-group.full { grid-column: 1/-1; }
+.colab-label { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .82rem; color: var(--txt2); }
+.colab-input {
+  padding: 10px 13px; border: 1.5px solid var(--borda); border-radius: 9px;
+  font-family: 'Nunito Sans', sans-serif; font-size: .88rem; color: var(--txt);
+  background: var(--input-bg); transition: border-color .2s;
+  appearance: none; -webkit-appearance: none;
+}
+.colab-input:focus { outline: none; border-color: var(--amarelo); background: #2A2A2A; box-shadow: 0 0 0 3px rgba(255,212,0,.15); }
+.colab-input option { background: #2A2A2A; }
+
+/* Autocomplete Polo */
+.polo-wrap { position: relative; }
+.polo-dropdown {
+  display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+  background: var(--card2); border: 1.5px solid var(--amarelo); border-radius: 10px;
+  max-height: 220px; overflow-y: auto; z-index: 200;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+}
+.polo-item {
+  padding: 10px 16px; cursor: pointer; font-size: .88rem; color: var(--txt);
+  border-bottom: 1px solid var(--borda); transition: background .12s;
+}
+.polo-item:last-child { border-bottom: none; }
+.polo-item:hover, .polo-item.ativo { background: #1C1800; color: var(--amarelo); font-weight: 700; }
+.polo-nenhum { padding: 12px 16px; font-size: .85rem; color: var(--txt3); text-align: center; }
 </style>
 </head>
 <body>
 
 <header>
   <div class="logo-area">
-    <div class="logo-vitru">✦</div>
+    <img src="Logo_Uniasselvi.png" width="42" height="42" style="border-radius:6px;object-fit:contain;" alt="Uniasselvi">
     <div>
-      <div class="h-title">vitru<span>*</span></div>
-      <div class="h-sub">ED. CONTINUADA · REGISTRO DE MATRÍCULAS</div>
+      <div class="h-title">Uniasselvi</div>
+      <div class="h-sub">CLOSERS · REGISTRO DE MATRÍCULAS</div>
     </div>
   </div>
   <div class="nav-links">
-    <a href="dashboard.html" class="nav-btn primary">📊 Dashboard</a>
+    <button onclick="abrirCadastroGestor()" class="nav-btn ghost">👤 Cadastrar Colaborador</button>
+    <button onclick="abrirDashboard()" class="nav-btn">📊 Dashboard</button>
   </div>
 </header>
 
 <div class="wrapper">
   <div class="card">
     <div class="card-head">
-      <h1>Educação Continuada <span>✦</span></h1>
-      <p>Registro unificado de matrículas · Vitru Contact Sales</p>
+      <h1>Closers — <span>Uniasselvi</span></h1>
+      <p>Registro de matrículas · Equipe Closers</p>
     </div>
     <div class="req-note">⚠ Todos os campos marcados com <strong> * </strong> são obrigatórios.</div>
 
     <div class="body">
 
-      <!-- 1. Consultor -->
       <div class="group">
-        <label class="label"><span class="num">1</span> Consultor(a) <span class="req">*</span></label>
+        <label class="label"><span class="num">1</span> Nome do(a) Consultor(a) <span class="req">*</span></label>
         <div class="sw">
           <select class="ctrl" id="consultor" required>
             <option value="">Selecione o(a) Consultor(a)</option>
-            <option value="Amanda Da Silva Martins">Amanda Da Silva Martins</option>
-            <option value="Ana Karoline Cristo Ribeiro">Ana Karoline Cristo Ribeiro</option>
-            <option value="Ana Paula De Sousa Leal">Ana Paula De Sousa Leal</option>
-            <option value="Beatriz Cristina Da Rocha Silva">Beatriz Cristina Da Rocha Silva</option>
-            <option value="Beatriz Dos Santos Ribeiro">Beatriz Dos Santos Ribeiro</option>
-            <option value="Beatriz Moreira De Maria">Beatriz Moreira De Maria</option>
-            <option value="Beatriz Shiki Portilho">Beatriz Shiki Portilho</option>
-            <option value="Bianca Santos Souza">Bianca Santos Souza</option>
-            <option value="Bruna Regina Da Silva Justino">Bruna Regina Da Silva Justino</option>
-            <option value="Claudia Azuaga">Claudia Azuaga</option>
-            <option value="Claudia Cristiane De Almeida Silva">Claudia Cristiane De Almeida Silva</option>
-            <option value="Danubia Cristina Estecio De Oliveira">Danubia Cristina Estecio De Oliveira</option>
-            <option value="Elaine Fernandes Boaventura">Elaine Fernandes Boaventura</option>
-            <option value="Elaine Kubitz">Elaine Kubitz</option>
-            <option value="Elis Danieli Maia Da Silva">Elis Danieli Maia Da Silva</option>
-            <option value="Eloisa Procópio Da Veiga">Eloisa Procópio Da Veiga</option>
-            <option value="Emily Emanuelly De Souza">Emily Emanuelly De Souza</option>
-            <option value="Erica Machado Maia De Oliveira">Erica Machado Maia De Oliveira</option>
-            <option value="Evelin Cristini Da Silva">Evelin Cristini Da Silva</option>
-            <option value="Flavia Cristina Dos Santos Sousa">Flavia Cristina Dos Santos Sousa</option>
-            <option value="Flavia Naiara Sales Da Costa">Flavia Naiara Sales Da Costa</option>
-            <option value="Franciele Moreira De Souza">Franciele Moreira De Souza</option>
-            <option value="Gabriela Moreira Da Silva">Gabriela Moreira Da Silva</option>
-            <option value="Gislaine Angélica Rodrigues Silva">Gislaine Angélica Rodrigues Silva</option>
-            <option value="Helen Almeida Maffioletti">Helen Almeida Maffioletti</option>
-            <option value="Helio Gabriel Dos Santos">Helio Gabriel Dos Santos</option>
-            <option value="Iara Patricia Pinheiro Da Silva">Iara Patricia Pinheiro Da Silva</option>
-            <option value="Ingrid Aparecida Dos Santos Lares Da Silva">Ingrid Aparecida Dos Santos Lares Da Silva</option>
-            <option value="Ivan Marques Daniel">Ivan Marques Daniel</option>
-            <option value="Ivoneide Silva Fernandes">Ivoneide Silva Fernandes</option>
-            <option value="Jaqueline Silva Leal">Jaqueline Silva Leal</option>
-            <option value="Juliana Rosa Marinho">Juliana Rosa Marinho</option>
-            <option value="Karoline Fagundes Guilhem">Karoline Fagundes Guilhem</option>
-            <option value="Karolyne Aparecida Díaz">Karolyne Aparecida Díaz</option>
-            <option value="Larissa Abade De Almeida">Larissa Abade De Almeida</option>
-            <option value="Leila Eduarda Dos Santos">Leila Eduarda Dos Santos</option>
-            <option value="Lidia Venancio Moura">Lidia Venancio Moura</option>
-            <option value="Luane Nepomuceno Dos Passos">Luane Nepomuceno Dos Passos</option>
-            <option value="Luciana Simili Crecencio">Luciana Simili Crecencio</option>
-            <option value="Malu Amaral Kanda">Malu Amaral Kanda</option>
-            <option value="Maria Heloisa Da Silva Dourado">Maria Heloisa Da Silva Dourado</option>
-            <option value="Mariana Ferreira Gomes Barbosa">Mariana Ferreira Gomes Barbosa</option>
-            <option value="Mariane Oliveira Dias">Mariane Oliveira Dias</option>
-            <option value="Mayara Parras Gomes">Mayara Parras Gomes</option>
-            <option value="Natalia Almeida Lima Morais">Natalia Almeida Lima Morais</option>
-            <option value="Rosana Claudia Faleiro">Rosana Claudia Faleiro</option>
-            <option value="Rosangela De Souza Ramos">Rosangela De Souza Ramos</option>
-            <option value="Roseli Cristina Vieira De Lima">Roseli Cristina Vieira De Lima</option>
-            <option value="Sarah Da Silva Purnucena">Sarah Da Silva Purnucena</option>
-            <option value="Talita Costa Ferreira">Talita Costa Ferreira</option>
-            <option value="Wanessa Cristina Martinelli Camargo Da Costa">Wanessa Cristina Martinelli Camargo Da Costa</option>
+            <option value="Kleberson Mariano">Kleberson Mariano</option>
           </select>
         </div>
       </div>
 
-      <!-- 2. Bandeira -->
       <div class="group">
-        <label class="label"><span class="num">2</span> Bandeira <span class="req">*</span></label>
+        <label class="label"><span class="num">2</span> Número do Contrato <span class="req">*</span></label>
+        <input class="ctrl" type="text" id="candidato" placeholder="Ex.: 202612345678"
+               inputmode="numeric" maxlength="20"
+               oninput="validarCandidato(this)"
+               onblur="verificarDuplicata(this)"
+               required>
+        <div class="field-hint" id="hintCandidato">
+          ⚠ O número do candidato deve começar com <strong>2026</strong>. Não utilize CPF.
+        </div>
+        <div class="field-hint" id="hintDuplicata">
+          ⛔ Este candidato já foi cadastrado. Verifique o número antes de continuar.
+        </div>
+      </div>
+
+      <div class="group">
+        <label class="label"><span class="num">3</span> Data do Pagamento <span class="req">*</span></label>
+        <input class="ctrl" type="date" id="dataPagamento" required>
+      </div>
+
+      <div class="group">
+        <label class="label"><span class="num">4</span> Link da Conversa <span class="req">*</span></label>
+        <input class="ctrl" type="text" id="linkConversa" placeholder="https://" required autocomplete="off">
+      </div>
+
+      <div class="group">
+        <label class="label"><span class="num">5</span> Modalidade de Curso <span class="req">*</span></label>
         <div class="sw">
-          <select class="ctrl" id="bandeira" onchange="onBandeiraChange()" required>
-            <option value="">Selecione a Bandeira</option>
-            <option value="Uniasselvi">Uniasselvi</option>
-            <option value="UNICESUMAR">UNICESUMAR</option>
+          <select class="ctrl" id="modalidade" onchange="onModalidadeChange()" required>
+            <option value="Graduação EAD">Graduação EAD</option>
           </select>
         </div>
-        <div class="bandeira-badge" id="bandeiraBadge"></div>
       </div>
 
-      <!-- 3 + 4 em linha -->
-      <div class="row-2">
-        <div class="group">
-          <label class="label"><span class="num">3</span> Data da Matrícula <span class="req">*</span></label>
-          <input class="ctrl" type="date" id="dataMatricula" required>
-        </div>
-        <div class="group">
-          <label class="label"><span class="num">4</span> Celular <span class="req">*</span></label>
-          <input class="ctrl" type="tel" id="celular" placeholder="(XX) XXXXX-XXXX" required>
+      <!-- Sub-campo: aparece apenas quando Ed. Continuada for selecionada -->
+      <div id="groupSubModalidade" style="display:none">
+        <div class="sub-group">
+          <label class="sub-label"><span class="num-sub">↳</span> Tipo de Ed. Continuada <span class="req">*</span></label>
+          <div class="sw">
+            <select class="ctrl" id="subModalidade">
+              <option value="">Selecione o Tipo</option>
+              <option value="Pós Graduação">Pós Graduação</option>
+              <option value="Profissionalizante">Profissionalizante</option>
+              <option value="Técnico">Técnico</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <!-- 5. Nome do Aluno -->
       <div class="group">
-        <label class="label"><span class="num">5</span> Nome do Aluno <span class="req">*</span></label>
-        <input class="ctrl" type="text" id="nomeAluno" placeholder="Nome completo do aluno" required>
-      </div>
-
-      <!-- 6 + 7 em linha -->
-      <div class="row-2">
-        <div class="group">
-          <label class="label"><span class="num">6</span> Matrícula</label>
-          <input class="ctrl" type="text" id="matricula" placeholder="Nº da matrícula">
-        </div>
-        <div class="group">
-          <label class="label"><span class="num">7</span> Polo <span class="req">*</span></label>
-          <input class="ctrl" type="text" id="polo" placeholder="Nome do polo" required>
-        </div>
-      </div>
-
-      <!-- 8. Produto -->
-      <div class="group">
-        <label class="label"><span class="num">8</span> Produto <span class="req">*</span></label>
+        <label class="label"><span class="num">6</span> Gestor(a) <span class="req">*</span></label>
         <div class="sw">
-          <select class="ctrl" id="produto" onchange="onProdutoChange()" required>
-            <option value="">Selecione o Produto</option>
-            <option value="Pós Graduação">Pós Graduação</option>
-            <option value="Profissionalizante">Profissionalizante</option>
-            <option value="Técnico">Técnico</option>
-            <option value="Cursos Livres Shopee">Cursos Livres Shopee</option>
+          <select class="ctrl" id="gestor" required>
+            <option value="">Selecione o(a) Gestor(a)</option>
+            <option value="Sandoval Eduardo Nazareth Souza">Sandoval Eduardo Nazareth Souza</option>
+            <option value="Patricia Maria Devecchi">Patricia Maria Devecchi</option>
+            <option value="Beatriz Ferrari Jordao">Beatriz Ferrari Jordao</option>
           </select>
         </div>
       </div>
 
-      <!-- 8b. Sub-campo Shopee -->
-      <div id="groupShopee" style="display:none">
-        <div class="sub-shopee">
-          <label class="sub-label">✦ Qual curso foi vendido? <span class="req">*</span></label>
-          <input class="ctrl" type="text" id="produtoShopee"
-                 placeholder="Descreva o curso vendido na Shopee...">
-        </div>
-      </div>
-
-      <!-- 9. Status -->
       <div class="group">
-        <label class="label"><span class="num">9</span> Status <span class="req">*</span></label>
-        <div class="sw">
-          <select class="ctrl" id="status" required>
-            <option value="">Selecione o Status</option>
-            <option value="Pago">Pago</option>
-            <option value="Aguardando Pagamento">Aguardando Pagamento</option>
-            <option value="Contrato Gerado">Contrato Gerado</option>
+        <label class="label"><span class="num">7</span> Polo <span class="req">*</span></label>
+        <div class="sw polo-wrap">
+          <input class="ctrl" type="text" id="poloBusca"
+                 placeholder="Digite o nome da cidade ou polo..."
+                 autocomplete="off"
+                 oninput="filtrarPolo()"
+                 onfocus="abrirPoloDropdown()"
+                 onkeydown="navPoloTeclado(event)">
+          <div class="polo-dropdown" id="poloDropdown"></div>
+        </div>
+        <div style="display:none">
+          <select id="polo">
+            <option value="">Selecione o Polo</option>
+            <option value="Maringá - PR">Maringá - PR</option>
           </select>
         </div>
+        <div class="field-hint" id="hintPolo">⚠ Selecione um polo válido da lista.</div>
       </div>
 
-      <!-- 10. Ticket / Link -->
       <div class="group">
-        <label class="label"><span class="num">10</span> Ticket / Link da Conversa <span class="req">*</span></label>
-        <input class="ctrl" type="text" id="ticketLink"
-               placeholder="Ticket (Blip) ou link da conversa (OmniChat)" required autocomplete="off">
-      </div>
-
-      <!-- 11. Tipo de Conversão -->
-      <div class="group">
-        <label class="label"><span class="num">11</span> Tipo de Conversão</label>
-        <input class="ctrl" type="text" id="tipoConversao" placeholder="Ex.: Ativo, Receptivo, Indicação...">
-      </div>
-
-      <!-- 12. Canal de Venda -->
-      <div class="group">
-        <label class="label"><span class="num">12</span> Canal de Venda <span class="req">*</span></label>
-        <div class="sw">
-          <select class="ctrl" id="canalVenda" required>
-            <option value="">Selecione o Canal</option>
-            <option value="Sede">Sede</option>
-            <option value="HAG">HAG</option>
-            <option value="Home Agent">Home Agent</option>
-          </select>
-        </div>
+        <label class="label"><span class="num">8</span> Observações</label>
+        <textarea class="ctrl" id="observacoes" placeholder="Observações relevantes sobre a matrícula..."></textarea>
       </div>
 
     </div>
     <div class="foot">
       <button class="btn btn-s" onclick="limpar()">Limpar</button>
-      <button class="btn btn-p" id="btnRegistrar" onclick="registrar()">✦ Registrar Matrícula</button>
+      <button class="btn btn-p" id="btnRegistrar" onclick="registrar()">✔ Registrar Matrícula</button>
     </div>
   </div>
 </div>
 
-<!-- Modal Dashboard -->
+<!-- Modal senha gestor -->
+<div class="modal-overlay" id="modalSenhaGestor">
+  <div class="modal-box">
+    <h3>🔒 Acesso — Gestores</h3>
+    <p>Digite a senha para cadastrar um novo colaborador.</p>
+    <input class="modal-input" type="password" id="inputSenhaGestor"
+           placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenhaGestor()">
+    <div class="modal-erro" id="errSenhaGestor">Senha incorreta. Tente novamente.</div>
+    <div class="modal-btns">
+      <button class="btn btn-s" onclick="fecharModalGestor()">Cancelar</button>
+      <button class="btn btn-p" onclick="verificarSenhaGestor()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal cadastro colaborador -->
+<div class="modal-overlay" id="modalColab">
+  <div class="modal-box-lg">
+    <h3>👤 Cadastrar Novo Colaborador</h3>
+    <p>Preencha os dados do colaborador. O nome aparecerá automaticamente no formulário após o cadastro.</p>
+    <div class="colab-grid">
+      <div class="colab-group full">
+        <label class="colab-label">Nome Completo *</label>
+        <input class="colab-input" type="text" id="colabNome" placeholder="Nome completo do colaborador">
+      </div>
+      <div class="colab-group">
+        <label class="colab-label">Email Corporativo *</label>
+        <input class="colab-input" type="email" id="colabEmail" placeholder="email@uniasselvi.com.br">
+      </div>
+      <div class="colab-group">
+        <label class="colab-label">Matrícula *</label>
+        <input class="colab-input" type="text" id="colabMatricula" placeholder="Nº da matrícula">
+      </div>
+      <div class="colab-group">
+        <label class="colab-label">Gestor Imediato *</label>
+        <select class="colab-input" id="colabGestor">
+          <option value="">Selecione o Gestor</option>
+          <option value="Sandoval Eduardo Nazareth Souza">Sandoval Eduardo Nazareth Souza</option>
+          <option value="Patricia Maria Devecchi">Patricia Maria Devecchi</option>
+          <option value="Beatriz Ferrari Jordao">Beatriz Ferrari Jordao</option>
+        </select>
+      </div>
+      <div class="colab-group">
+        <label class="colab-label">Data de Admissão *</label>
+        <input class="colab-input" type="date" id="colabAdmissao">
+      </div>
+      <div class="colab-group">
+        <label class="colab-label">Canal de Atendimento *</label>
+        <select class="colab-input" id="colabCanal">
+          <option value="">Selecione</option>
+          <option value="Interno">Interno</option>
+          <option value="Externo - HAG">Externo - HAG</option>
+          <option value="Externo - HOME AGENT">Externo - HOME AGENT</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-erro" id="errColab" style="display:none;margin-bottom:12px"></div>
+    <div class="modal-btns">
+      <button class="btn btn-s" onclick="fecharModalColab()">Cancelar</button>
+      <button class="btn btn-p" id="btnSalvarColab" onclick="cadastrarColaborador()">✔ Cadastrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal senha dashboard -->
 <div class="modal-overlay" id="modalSenha">
   <div class="modal-box">
     <h3>🔒 Acesso ao Dashboard</h3>
-    <p>Digite a senha para visualizar o painel.</p>
+    <p>Digite a senha para visualizar o painel de matrículas.</p>
     <input class="modal-input" type="password" id="inputSenha"
            placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenha()">
     <div class="modal-erro" id="errSenha">Senha incorreta. Tente novamente.</div>
@@ -418,10 +442,10 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL  = 'https://hnzjveincaygawjttngv.supabase.co';
-const SUPABASE_KEY  = 'sb_publishable_us2dvtADt7a7yk8SBXZPUA_gugW3otS';
-const SENHA_SISTEMA = 'EdCont@2026';
-const DADOS_KEY     = 'vitru_ed_cont_v1';
+const SUPABASE_URL  = 'https://wfequjtoutpqvfyjdrvo.supabase.co';
+const SUPABASE_KEY  = 'sb_publishable_NYXnlMO9SZc4Sg3zxPCZtw_Uto0gecQ';
+const SENHA_SISTEMA = 'Closer@2026';
+const DADOS_KEY     = 'uniasselvi_closers_v1';
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -435,126 +459,216 @@ function toastMsg(msg, cor = '#2ECC71') {
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ── Bandeira ──
-function onBandeiraChange() {
-  const val = document.getElementById('bandeira').value;
-  const badge = document.getElementById('bandeiraBadge');
-  if (val === 'Uniasselvi') {
-    badge.className = 'bandeira-badge uni';
-    badge.textContent = 'Uniasselvi';
-    badge.style.display = 'inline-flex';
-  } else if (val === 'UNICESUMAR') {
-    badge.className = 'bandeira-badge unicesumar';
-    badge.textContent = 'UNICESUMAR';
-    badge.style.display = 'inline-flex';
-  } else {
-    badge.style.display = 'none';
-  }
-}
-
-// ── Produto / Shopee ──
-function onProdutoChange() {
-  const val = document.getElementById('produto').value;
-  const sub  = document.getElementById('groupShopee');
-  if (val === 'Cursos Livres Shopee') {
+// ── Modalidade de Curso ──
+function onModalidadeChange() {
+  const val = document.getElementById('modalidade').value;
+  const sub  = document.getElementById('groupSubModalidade');
+  if (val === 'Ed. Continuada') {
     sub.style.display = 'block';
   } else {
     sub.style.display = 'none';
-    document.getElementById('produtoShopee').value = '';
+    document.getElementById('subModalidade').value = '';
   }
 }
 
-function getProdutoFinal() {
-  const prod = document.getElementById('produto').value;
-  if (prod === 'Cursos Livres Shopee') {
-    const desc = document.getElementById('produtoShopee').value.trim();
-    return desc ? `Shopee — ${desc}` : 'Cursos Livres Shopee';
+function getModalidadeFinal() {
+  const mod = document.getElementById('modalidade').value;
+  if (mod === 'Ed. Continuada') {
+    const sub = document.getElementById('subModalidade').value;
+    return sub ? `Ed. Continuada — ${sub}` : '';
   }
-  return prod;
+  return mod;
 }
+
+// ── Validação candidato ──
+function validarCandidato(el) {
+  const val = el.value.trim();
+  const hint = document.getElementById('hintCandidato');
+  if (val.length > 0 && !val.startsWith('2026')) {
+    el.style.borderColor = 'var(--vermelho)';
+    hint.style.display = 'block';
+  } else {
+    el.style.borderColor = '';
+    hint.style.display = 'none';
+  }
+  document.getElementById('hintDuplicata').style.display = 'none';
+}
+
+async function verificarDuplicata(el) {
+  const val = el.value.trim();
+  if (!val || !val.startsWith('2026')) return;
+
+  // 1. Verifica localStorage (instantâneo)
+  const dados = JSON.parse(localStorage.getItem(DADOS_KEY) || '[]');
+  if (dados.some(d => String(d.candidato).trim() === val)) {
+    _marcarDuplicata(el); return;
+  }
+
+  // 2. Verifica Supabase (autoritativo)
+  try {
+    const { data } = await db.from('matriculas').select('id').eq('candidato', val).maybeSingle();
+    if (data) _marcarDuplicata(el);
+  } catch (_) {}
+}
+
+function _marcarDuplicata(el) {
+  el.style.borderColor = 'var(--vermelho)';
+  el.style.boxShadow   = '0 0 0 3px rgba(255,85,85,.15)';
+  document.getElementById('hintDuplicata').style.display = 'block';
+}
+
+// ── Polo Autocomplete ──
+let _poloSelecionado = '';
+let _poloAtivo = -1;
+
+function filtrarPolo() {
+  _poloSelecionado = '';
+  document.getElementById('polo').value = '';
+  const q    = document.getElementById('poloBusca').value.toLowerCase().trim();
+  const opts = Array.from(document.getElementById('polo').options).slice(1);
+  const drop = document.getElementById('poloDropdown');
+  _poloAtivo = -1;
+  if (!q) { drop.style.display = 'none'; return; }
+  const matches = opts.filter(o => o.value.toLowerCase().includes(q)).slice(0, 50);
+  if (!matches.length) {
+    drop.innerHTML = '<div class="polo-nenhum">Nenhum polo encontrado</div>';
+  } else {
+    drop.innerHTML = matches.map(o =>
+      `<div class="polo-item" onclick="selecionarPolo('${o.value.replace(/'/g,"\\'")}')">
+        ${o.value}
+      </div>`).join('');
+  }
+  drop.style.display = 'block';
+}
+
+function abrirPoloDropdown() {
+  if (document.getElementById('poloBusca').value.trim()) filtrarPolo();
+}
+
+function selecionarPolo(val) {
+  _poloSelecionado = val;
+  document.getElementById('poloBusca').value = val;
+  document.getElementById('polo').value = val;
+  document.getElementById('poloDropdown').style.display = 'none';
+  document.getElementById('poloBusca').style.borderColor = '';
+  document.getElementById('hintPolo').style.display = 'none';
+}
+
+function navPoloTeclado(e) {
+  const items = document.querySelectorAll('.polo-item');
+  if (!items.length) return;
+  if (e.key === 'ArrowDown') _poloAtivo = Math.min(_poloAtivo + 1, items.length - 1);
+  else if (e.key === 'ArrowUp') _poloAtivo = Math.max(_poloAtivo - 1, 0);
+  else if (e.key === 'Enter' && _poloAtivo >= 0) { e.preventDefault(); items[_poloAtivo].click(); return; }
+  else if (e.key === 'Escape') { document.getElementById('poloDropdown').style.display = 'none'; return; }
+  items.forEach((el, i) => el.classList.toggle('ativo', i === _poloAtivo));
+  if (_poloAtivo >= 0) items[_poloAtivo].scrollIntoView({ block: 'nearest' });
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.polo-wrap')) document.getElementById('poloDropdown').style.display = 'none';
+});
 
 // ── Limpar ──
 function limpar() {
-  ['consultor','bandeira','dataMatricula','celular','nomeAluno','matricula',
-   'polo','produto','produtoShopee','status','ticketLink','tipoConversao','canalVenda']
+  ['consultor','candidato','dataPagamento','linkConversa','observacoes','modalidade','subModalidade','gestor','polo']
     .forEach(id => { document.getElementById(id).value = ''; });
-  document.getElementById('groupShopee').style.display = 'none';
-  document.getElementById('bandeiraBadge').style.display = 'none';
+  document.getElementById('groupSubModalidade').style.display = 'none';
+  document.getElementById('poloBusca').value = '';
+  _poloSelecionado = '';
+  ['hintPolo','hintCandidato','hintDuplicata'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('poloBusca').style.borderColor = '';
 }
 
 // ── Registrar ──
 async function registrar() {
-  const consultor     = document.getElementById('consultor').value;
-  const bandeira      = document.getElementById('bandeira').value;
-  const dataMatricula = document.getElementById('dataMatricula').value;
-  const celular       = document.getElementById('celular').value.trim();
-  const nomeAluno     = document.getElementById('nomeAluno').value.trim();
-  const matricula     = document.getElementById('matricula').value.trim();
-  const polo          = document.getElementById('polo').value.trim();
-  const produto       = document.getElementById('produto').value;
-  const status        = document.getElementById('status').value;
-  const ticketLink    = document.getElementById('ticketLink').value.trim();
-  const tipoConversao = document.getElementById('tipoConversao').value.trim();
-  const canalVenda    = document.getElementById('canalVenda').value;
+  const consultor    = document.getElementById('consultor').value.trim();
+  const candidato    = document.getElementById('candidato').value.trim();
+  const dataPagamento= document.getElementById('dataPagamento').value;
+  const linkConversa = document.getElementById('linkConversa').value.trim();
+  const observacoes  = document.getElementById('observacoes').value.trim();
+  const modalidade   = document.getElementById('modalidade').value;
+  const polo         = document.getElementById('polo').value;
+  const gestor       = document.getElementById('gestor').value;
 
-  if (!consultor || !bandeira || !dataMatricula || !celular || !nomeAluno ||
-      !polo || !produto || !status || !ticketLink || !canalVenda) {
-    toastMsg('⚠ Preencha todos os campos obrigatórios.', '#FF5555');
-    return;
+  if (!consultor || !candidato || !dataPagamento || !linkConversa || !modalidade || !gestor) {
+    toastMsg('⚠ Preencha todos os campos obrigatórios.', '#FF5555'); return;
   }
-
-  if (produto === 'Cursos Livres Shopee' && !document.getElementById('produtoShopee').value.trim()) {
-    toastMsg('⚠ Descreva o curso vendido na Shopee.', '#FF5555');
-    return;
+  if (modalidade === 'Ed. Continuada' && !document.getElementById('subModalidade').value) {
+    toastMsg('⚠ Selecione o tipo de Ed. Continuada.', '#FF5555'); return;
+  }
+  if (!polo) {
+    toastMsg('⚠ Selecione um Polo válido da lista.', '#FF5555');
+    document.getElementById('poloBusca').style.borderColor = 'var(--vermelho)';
+    document.getElementById('hintPolo').style.display = 'block'; return;
+  }
+  if (!candidato.startsWith('2026')) {
+    toastMsg('⚠ Número do candidato inválido. Deve começar com 2026.', '#FF5555');
+    document.getElementById('hintCandidato').style.display = 'block'; return;
   }
 
   const btn = document.getElementById('btnRegistrar');
-  btn.disabled = true; btn.textContent = '⏳ Salvando...';
+  btn.disabled = true; btn.textContent = '⏳ Verificando...';
 
-  const produtoFinal = getProdutoFinal();
-
-  // Backup localStorage
   const dados = JSON.parse(localStorage.getItem(DADOS_KEY) || '[]');
-  const id = dados.length ? Math.max(...dados.map(d => d.id || 0)) + 1 : 1;
-  const agora = new Date().toLocaleString('pt-BR');
-  dados.push({ id, consultor, bandeira, dataMatricula, celular, nomeAluno,
-               matricula, polo, produto: produtoFinal, status, ticketLink,
-               tipoConversao, canalVenda, registrado_em: agora });
-  localStorage.setItem(DADOS_KEY, JSON.stringify(dados));
+  let jaExiste = dados.some(d => String(d.candidato).trim() === candidato);
 
-  // Salva no Supabase (quando configurado)
-  if (SUPABASE_URL !== 'SUPABASE_URL_AQUI') {
-    try {
-      const { error } = await db.from('matriculas_ed_cont').insert({
-        consultor, bandeira,
-        data_matricula: dataMatricula,
-        celular, nome_aluno: nomeAluno,
-        matricula, polo,
-        produto: produtoFinal,
-        produto_descricao: produto === 'Cursos Livres Shopee'
-          ? document.getElementById('produtoShopee').value.trim() : null,
-        status, ticket_link: ticketLink,
-        tipo_conversao: tipoConversao,
-        canal_venda: canalVenda
-      });
-      if (error) throw error;
-    } catch (err) {
-      btn.disabled = false; btn.textContent = '✦ Registrar Matrícula';
-      toastMsg('❌ Erro ao salvar. Dados mantidos localmente.', '#FF5555');
-      return;
-    }
+  if (jaExiste) {
+    btn.disabled = false; btn.textContent = '✔ Registrar Matrícula';
+    toastMsg('⛔ Candidato já cadastrado!', '#FF5555');
+    _marcarDuplicata(document.getElementById('candidato')); return;
   }
 
-  btn.disabled = false; btn.textContent = '✦ Registrar Matrícula';
-  toastMsg('✦ Matrícula registrada com sucesso!');
+  const modalidadeFinal = getModalidadeFinal();
+  const agora = new Date().toLocaleString('pt-BR');
+
+  // Salva no Supabase
+  const { error } = await db.from('matriculas').insert({
+    consultor,
+    candidato,
+    data_pagamento: dataPagamento,
+    link_conversa:  linkConversa,
+    observacoes,
+    polo,
+    modalidade:     modalidadeFinal,
+    gestor
+  });
+
+  if (error) {
+    btn.disabled = false; btn.textContent = '✔ Registrar Matrícula';
+    if (error.code === '23505') {
+      toastMsg('⛔ Candidato já cadastrado!', '#FF5555');
+      _marcarDuplicata(document.getElementById('candidato'));
+    } else {
+      toastMsg('❌ Erro ao salvar. Tente novamente.', '#FF5555');
+    }
+    return;
+  }
+
+  // Backup no localStorage
+  const id = dados.length ? Math.max(...dados.map(d => d.id || 0)) + 1 : 1;
+  dados.push({ id, consultor, candidato, data: dataPagamento, link: linkConversa,
+               obs: observacoes, polo, modalidade: modalidadeFinal, gestor, registrado_em: agora });
+  localStorage.setItem(DADOS_KEY, JSON.stringify(dados));
+
+  btn.disabled = false; btn.textContent = '✔ Registrar Matrícula';
+  toastMsg('✔ Matrícula registrada com sucesso!');
   limpar();
 }
 
 // ── Dashboard ──
+function abrirDashboard() {
+  document.getElementById('inputSenha').value = '';
+  document.getElementById('errSenha').style.display = 'none';
+  document.getElementById('modalSenha').classList.add('show');
+  setTimeout(() => document.getElementById('inputSenha').focus(), 100);
+}
 function fecharModal() { document.getElementById('modalSenha').classList.remove('show'); }
 function verificarSenha() {
   if (document.getElementById('inputSenha').value === SENHA_SISTEMA) {
-    sessionStorage.setItem('edcont_auth', '1');
+    sessionStorage.setItem('dash_auth', '1');
     window.location.href = 'dashboard.html';
   } else {
     document.getElementById('errSenha').style.display = 'block';
@@ -562,6 +676,91 @@ function verificarSenha() {
     document.getElementById('inputSenha').focus();
   }
 }
+
+// ── Colaboradores ──
+function abrirCadastroGestor() {
+  document.getElementById('inputSenhaGestor').value = '';
+  document.getElementById('errSenhaGestor').style.display = 'none';
+  document.getElementById('modalSenhaGestor').classList.add('show');
+  setTimeout(() => document.getElementById('inputSenhaGestor').focus(), 100);
+}
+function fecharModalGestor() { document.getElementById('modalSenhaGestor').classList.remove('show'); }
+function verificarSenhaGestor() {
+  if (document.getElementById('inputSenhaGestor').value === SENHA_SISTEMA) {
+    fecharModalGestor(); abrirModalColab();
+  } else {
+    document.getElementById('errSenhaGestor').style.display = 'block';
+    document.getElementById('inputSenhaGestor').value = '';
+    document.getElementById('inputSenhaGestor').focus();
+  }
+}
+function abrirModalColab() {
+  ['colabNome','colabEmail','colabMatricula','colabAdmissao'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('colabGestor').value = '';
+  document.getElementById('colabCanal').value = '';
+  document.getElementById('errColab').style.display = 'none';
+  document.getElementById('modalColab').classList.add('show');
+  setTimeout(() => document.getElementById('colabNome').focus(), 100);
+}
+function fecharModalColab() { document.getElementById('modalColab').classList.remove('show'); }
+
+async function cadastrarColaborador() {
+  const nome      = document.getElementById('colabNome').value.trim();
+  const email     = document.getElementById('colabEmail').value.trim();
+  const matricula = document.getElementById('colabMatricula').value.trim();
+  const gestor    = document.getElementById('colabGestor').value;
+  const admissao  = document.getElementById('colabAdmissao').value;
+  const canal     = document.getElementById('colabCanal').value;
+
+  if (!nome || !email || !matricula || !gestor || !admissao || !canal) {
+    const err = document.getElementById('errColab');
+    err.textContent = '⚠ Preencha todos os campos obrigatórios.';
+    err.style.display = 'block'; return;
+  }
+  const btn = document.getElementById('btnSalvarColab');
+  btn.disabled = true; btn.textContent = '⏳ Salvando...';
+
+  const { error } = await db.from('colaboradores').insert({
+    nome, email, matricula, gestor,
+    data_admissao: admissao,
+    canal
+  });
+
+  if (error) {
+    const err = document.getElementById('errColab');
+    err.textContent = error.code === '23505'
+      ? '⛔ Email ou matrícula já cadastrado.'
+      : '❌ Erro ao salvar. Tente novamente.';
+    err.style.display = 'block';
+    btn.disabled = false; btn.textContent = '✔ Cadastrar';
+    return;
+  }
+
+  adicionarConsultorSelect(nome);
+  fecharModalColab();
+  toastMsg('✔ Colaborador cadastrado com sucesso!');
+  btn.disabled = false; btn.textContent = '✔ Cadastrar';
+}
+
+async function carregarConsultores() {
+  try {
+    const { data } = await db.from('colaboradores').select('nome').order('nome');
+    if (data) data.forEach(c => adicionarConsultorSelect(c.nome));
+  } catch (_) {}
+}
+
+function adicionarConsultorSelect(nome) {
+  const select = document.getElementById('consultor');
+  if (Array.from(select.options).some(o => o.value === nome)) return;
+  const opt = document.createElement('option');
+  opt.value = nome; opt.textContent = nome;
+  const opcoes = Array.from(select.options).slice(1);
+  const pos = opcoes.findIndex(o => o.value.localeCompare(nome, 'pt-BR') > 0);
+  if (pos === -1) select.appendChild(opt);
+  else select.options[pos + 1].before(opt);
+}
+// Carrega consultores cadastrados ao abrir o formulário
+carregarConsultores();
 </script>
 </body>
 </html>
