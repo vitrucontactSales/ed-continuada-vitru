@@ -178,7 +178,7 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
 /* ── Modal ── */
 .modal-overlay {
   display: none; position: fixed; inset: 0; background: rgba(0,0,0,.75);
-  z-index: 1000; align-items: center; justify-content: center;
+  z-index: 1000; align-items: center; justify-content: center; padding: 16px;
 }
 .modal-overlay.show { display: flex; }
 .modal-box {
@@ -198,6 +198,52 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
 .modal-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,197,24,.15); }
 .modal-erro { color: var(--vermelho); font-size: .8rem; margin-bottom: 10px; display: none; }
 .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ── Modal Colaborador ── */
+.modal-colab {
+  width: 560px; max-width: 100%;
+  background: var(--card); border-radius: var(--r); padding: 28px 28px 24px;
+  box-shadow: var(--shadow); font-family: 'Nunito', sans-serif;
+  border: 1px solid var(--borda); border-top: 3px solid var(--violet);
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-colab-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+.modal-colab-icon {
+  width: 40px; height: 40px; border-radius: 50%; background: rgba(139,92,246,.15);
+  border: 1.5px solid var(--violet); display: flex; align-items: center;
+  justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+}
+.modal-colab-head h3 { color: var(--txt); font-size: 1rem; font-weight: 800; margin-bottom: 4px; }
+.modal-colab-head p { color: var(--txt2); font-size: .78rem; line-height: 1.4; }
+.mc-body { display: flex; flex-direction: column; gap: 14px; }
+.mc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:480px) { .mc-row { grid-template-columns: 1fr; } }
+.mc-group { display: flex; flex-direction: column; gap: 5px; }
+.mc-label {
+  font-size: .72rem; font-weight: 700; color: var(--txt2);
+  font-family: 'Nunito', sans-serif; letter-spacing: .04em;
+}
+.mc-req { color: var(--vermelho); margin-left: 2px; }
+.mc-ctrl {
+  width: 100%; padding: 9px 12px; border: 1.5px solid var(--borda);
+  border-radius: 8px; font-family: 'Nunito Sans', sans-serif;
+  font-size: .88rem; color: var(--txt); background: var(--card2);
+  transition: border-color .2s; appearance: none; -webkit-appearance: none;
+}
+.mc-ctrl:focus { outline: none; border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,.18); }
+.mc-ctrl::placeholder { color: var(--txt3); }
+.mc-ctrl option { background: #231450; }
+.mc-sw { position: relative; }
+.mc-sw::after {
+  content: '▾'; position: absolute; right: 11px; top: 50%;
+  transform: translateY(-50%); color: var(--txt3); pointer-events: none; font-size: .8rem;
+}
+.mc-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--borda); }
+.btn-colab-s { padding: 9px 20px; border-radius: 8px; border: 1.5px solid var(--borda-f); background: transparent; color: var(--txt2); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .84rem; cursor: pointer; transition: all .2s; }
+.btn-colab-s:hover { border-color: var(--vermelho); color: var(--vermelho); }
+.btn-colab-p { padding: 9px 22px; border-radius: 8px; border: none; background: var(--violet); color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .84rem; cursor: pointer; transition: all .2s; }
+.btn-colab-p:hover { background: var(--violet-d); }
+.btn-colab-p:disabled { opacity: .6; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -210,6 +256,7 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
     </div>
   </div>
   <div class="nav-links">
+    <button onclick="abrirModalSenhaColab()" class="nav-btn">👤 Colaborador</button>
     <a href="dashboard.html" class="nav-btn primary">📊 Dashboard</a>
   </div>
 </header>
@@ -406,6 +453,88 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
+<!-- Modal Senha Colaborador -->
+<div class="modal-overlay" id="modalSenhaColab">
+  <div class="modal-box">
+    <h3>🔒 Área Restrita</h3>
+    <p>Digite a senha para cadastrar um novo colaborador.</p>
+    <input class="modal-input" type="password" id="inputSenhaColab"
+           placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenhaColab()"
+           oninput="document.getElementById('errSenhaColab').style.display='none'">
+    <div class="modal-erro" id="errSenhaColab">Senha incorreta. Tente novamente.</div>
+    <div class="modal-btns">
+      <button class="btn btn-s" onclick="document.getElementById('modalSenhaColab').classList.remove('show')">Cancelar</button>
+      <button class="btn btn-p" onclick="verificarSenhaColab()">Entrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cadastrar Colaborador -->
+<div class="modal-overlay" id="modalColaborador">
+  <div class="modal-colab">
+    <div class="modal-colab-head">
+      <div class="modal-colab-icon">👤</div>
+      <div>
+        <h3>Cadastrar Novo Colaborador</h3>
+        <p>Preencha os dados do colaborador. Após o cadastro, o nome aparecerá automaticamente no formulário de matrículas.</p>
+      </div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-group">
+        <label class="mc-label">Nome Completo <span class="mc-req">*</span></label>
+        <input class="mc-ctrl" type="text" id="colabNome" placeholder="Nome completo do colaborador">
+      </div>
+      <div class="mc-row">
+        <div class="mc-group">
+          <label class="mc-label">Email Corporativo <span class="mc-req">*</span></label>
+          <input class="mc-ctrl" type="email" id="colabEmail" placeholder="email@empresa.com">
+        </div>
+        <div class="mc-group">
+          <label class="mc-label">Matrícula <span class="mc-req">*</span></label>
+          <input class="mc-ctrl" type="text" id="colabMatricula" placeholder="Nº da matrícula">
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-group">
+          <label class="mc-label">Gestor Imediato <span class="mc-req">*</span></label>
+          <input class="mc-ctrl" type="text" id="colabGestor" placeholder="Nome do gestor">
+        </div>
+        <div class="mc-group">
+          <label class="mc-label">Data de Admissão <span class="mc-req">*</span></label>
+          <input class="mc-ctrl" type="date" id="colabAdmissao">
+        </div>
+      </div>
+      <div class="mc-row">
+        <div class="mc-group">
+          <label class="mc-label">Canal de Atendimento <span class="mc-req">*</span></label>
+          <div class="mc-sw">
+            <select class="mc-ctrl" id="colabCanal">
+              <option value="">Selecione</option>
+              <option value="Sede">Sede</option>
+              <option value="Home Agent">Home Agent</option>
+              <option value="HAG">HAG</option>
+            </select>
+          </div>
+        </div>
+        <div class="mc-group">
+          <label class="mc-label">Bandeira <span class="mc-req">*</span></label>
+          <div class="mc-sw">
+            <select class="mc-ctrl" id="colabBandeira">
+              <option value="">Selecione</option>
+              <option value="UNICESUMAR">UNICESUMAR</option>
+              <option value="Uniasselvi">Uniasselvi</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mc-btns">
+      <button class="btn-colab-s" onclick="fecharModalColab()">Cancelar</button>
+      <button class="btn-colab-p" id="btnCadastrarColab" onclick="cadastrarColaborador()">✔ Cadastrar</button>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Dashboard -->
 <div class="modal-overlay" id="modalSenha">
   <div class="modal-box">
@@ -569,6 +698,101 @@ async function registrar() {
   toastMsg('✦ Matrícula registrada com sucesso!');
   limpar();
 }
+
+// ── Colaboradores ──
+const COLAB_KEY = 'vitru_colaboradores_v1';
+
+function carregarColaboradoresExtras() {
+  const extras = JSON.parse(localStorage.getItem(COLAB_KEY) || '[]');
+  const sel = document.getElementById('consultor');
+  const existentes = new Set(Array.from(sel.options).map(o => o.value.toLowerCase()));
+  extras.forEach(c => {
+    if (c.nome && !existentes.has(c.nome.toLowerCase())) {
+      const o = document.createElement('option');
+      o.value = c.nome; o.textContent = c.nome;
+      sel.appendChild(o);
+      existentes.add(c.nome.toLowerCase());
+    }
+  });
+  reordenarConsultores();
+}
+
+function reordenarConsultores() {
+  const sel = document.getElementById('consultor');
+  const placeholder = sel.options[0];
+  const opts = Array.from(sel.options).slice(1).sort((a, b) => a.text.localeCompare(b.text, 'pt-BR'));
+  while (sel.options.length > 1) sel.remove(1);
+  opts.forEach(o => sel.appendChild(o));
+  sel.insertBefore(placeholder, sel.options[0]);
+}
+
+function abrirModalSenhaColab() {
+  document.getElementById('inputSenhaColab').value = '';
+  document.getElementById('errSenhaColab').style.display = 'none';
+  document.getElementById('modalSenhaColab').classList.add('show');
+  setTimeout(() => document.getElementById('inputSenhaColab').focus(), 100);
+}
+
+function verificarSenhaColab() {
+  if (document.getElementById('inputSenhaColab').value === SENHA_SISTEMA) {
+    document.getElementById('modalSenhaColab').classList.remove('show');
+    limparFormColab();
+    document.getElementById('modalColaborador').classList.add('show');
+  } else {
+    document.getElementById('errSenhaColab').style.display = 'block';
+    document.getElementById('inputSenhaColab').value = '';
+    document.getElementById('inputSenhaColab').focus();
+  }
+}
+
+function fecharModalColab() {
+  document.getElementById('modalColaborador').classList.remove('show');
+  limparFormColab();
+}
+
+function limparFormColab() {
+  ['colabNome','colabEmail','colabMatricula','colabGestor','colabAdmissao','colabCanal','colabBandeira']
+    .forEach(id => { document.getElementById(id).value = ''; });
+}
+
+function cadastrarColaborador() {
+  const nome      = document.getElementById('colabNome').value.trim();
+  const email     = document.getElementById('colabEmail').value.trim();
+  const matricula = document.getElementById('colabMatricula').value.trim();
+  const gestor    = document.getElementById('colabGestor').value.trim();
+  const admissao  = document.getElementById('colabAdmissao').value;
+  const canal     = document.getElementById('colabCanal').value;
+  const bandeira  = document.getElementById('colabBandeira').value;
+
+  if (!nome || !email || !matricula || !gestor || !admissao || !canal || !bandeira) {
+    toastMsg('⚠ Preencha todos os campos obrigatórios.', '#FF5555'); return;
+  }
+
+  const sel = document.getElementById('consultor');
+  const jaExiste = Array.from(sel.options).some(o => o.value.toLowerCase() === nome.toLowerCase());
+  if (jaExiste) {
+    toastMsg('⚠ Este colaborador já está na lista.', '#F59E0B'); return;
+  }
+
+  const btn = document.getElementById('btnCadastrarColab');
+  btn.disabled = true; btn.textContent = '⏳ Salvando...';
+
+  const extras = JSON.parse(localStorage.getItem(COLAB_KEY) || '[]');
+  extras.push({ nome, email, matricula, gestor, admissao, canal, bandeira, cadastrado_em: new Date().toISOString() });
+  localStorage.setItem(COLAB_KEY, JSON.stringify(extras));
+
+  const o = document.createElement('option');
+  o.value = nome; o.textContent = nome;
+  sel.appendChild(o);
+  reordenarConsultores();
+
+  btn.disabled = false; btn.textContent = '✔ Cadastrar';
+  fecharModalColab();
+  toastMsg(`✦ ${nome} cadastrado(a) com sucesso!`);
+}
+
+// Carregar colaboradores extras ao iniciar
+carregarColaboradoresExtras();
 
 // ── Dashboard ──
 function fecharModal() { document.getElementById('modalSenha').classList.remove('show'); }
