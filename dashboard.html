@@ -63,8 +63,7 @@ header {
 .wrapper { max-width: 1440px; margin: 0 auto; padding: 24px 24px 60px; }
 
 /* KPI Grid */
-.kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
-@media(max-width:900px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+.kpi-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin-bottom: 24px; }
 @media(max-width:480px) { .kpi-grid { grid-template-columns: 1fr; } }
 
 .kpi-card {
@@ -83,8 +82,6 @@ header {
 .var-eq   { background: rgba(176,157,200,.1); color: var(--txt3); }
 .kpi-card.k-total { border-top: 3px solid var(--violet); }
 .kpi-card.k-sede  { border-top: 3px solid var(--gold); }
-.kpi-card.k-home  { border-top: 3px solid #3B82F6; }
-.kpi-card.k-hag   { border-top: 3px solid #F59E0B; }
 
 /* Filters */
 .filters {
@@ -312,24 +309,6 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
         <span class="kpi-var var-eq" id="kpiSedeVar">—</span>
       </div>
     </div>
-    <div class="kpi-card k-home">
-      <span class="kpi-icon">🏠</span>
-      <div class="kpi-label">Home Agent</div>
-      <div class="kpi-value" id="kpiHome">—</div>
-      <div class="kpi-meta">
-        <span class="kpi-semana">Semana: <b id="kpiHomeSem">—</b></span>
-        <span class="kpi-var var-eq" id="kpiHomeVar">—</span>
-      </div>
-    </div>
-    <div class="kpi-card k-hag">
-      <span class="kpi-icon">📞</span>
-      <div class="kpi-label">HAG</div>
-      <div class="kpi-value" id="kpiHag">—</div>
-      <div class="kpi-meta">
-        <span class="kpi-semana">Semana: <b id="kpiHagSem">—</b></span>
-        <span class="kpi-var var-eq" id="kpiHagVar">—</span>
-      </div>
-    </div>
   </div>
 
   <!-- Filtros -->
@@ -343,19 +322,12 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
       </select>
     </div>
     <div class="fg">
-      <label>Canal de Venda</label>
-      <select class="fctrl" id="fCanal" onchange="aplicarFiltros()">
-        <option value="">Todos</option>
-        <option value="Sede">Sede</option>
-        <option value="Home Agent">Home Agent</option>
-        <option value="HAG">HAG</option>
-      </select>
-    </div>
-    <div class="fg">
       <label>Produto</label>
       <select class="fctrl" id="fProduto" onchange="aplicarFiltros()">
         <option value="">Todos</option>
         <option value="Pós Graduação">Pós Graduação</option>
+        <option value="Pós Híbrida">Pós Híbrida</option>
+        <option value="Pós Medicina">Pós Medicina</option>
         <option value="Técnico">Técnico</option>
         <option value="Profissionalizante">Profissionalizante</option>
       </select>
@@ -393,12 +365,12 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
     <div class="chart-card">
       <div class="chart-title">
         Ranking por Consultor
-        <span style="font-size:.68rem;color:var(--txt3);font-weight:400;text-transform:none">excl. Home Agent · top 15</span>
+        <span style="font-size:.68rem;color:var(--txt3);font-weight:400;text-transform:none">top 15</span>
       </div>
       <div class="chart-wrap"><canvas id="chartConsultor"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Participação por Canal</div>
+      <div class="chart-title">Distribuição por Bandeira</div>
       <div class="chart-wrap"><canvas id="chartCanal"></canvas></div>
     </div>
     <div class="chart-card">
@@ -411,7 +383,7 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
   <div class="charts-row cr2">
     <div class="chart-card">
       <div class="chart-title">
-        Evolução Temporal por Canal
+        Evolução Temporal por Bandeira
         <div class="toggle-btns">
           <button class="tbtn ativo" id="tbtnSemana" onclick="setModoEvolucao('semana')">Semana</button>
           <button class="tbtn" id="tbtnMes" onclick="setModoEvolucao('mes')">Mês</button>
@@ -424,10 +396,10 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
       <div style="overflow-x:auto">
         <table class="prod-table">
           <thead>
-            <tr><th>Produto</th><th>Sede</th><th>Home</th><th>HAG</th><th>Total</th><th>%</th></tr>
+            <tr><th>Produto</th><th>Uniasselvi</th><th>UNICESUMAR</th><th>Total</th><th>%</th></tr>
           </thead>
           <tbody id="prodTableBody">
-            <tr><td colspan="6" style="color:var(--txt3);text-align:center;padding:20px">—</td></tr>
+            <tr><td colspan="5" style="color:var(--txt3);text-align:center;padding:20px">—</td></tr>
           </tbody>
         </table>
       </div>
@@ -612,8 +584,6 @@ function atualizarKPIs(d) {
   [
     { ids:['kpiTotal','kpiTotalSem','kpiTotalVar'], canal: null },
     { ids:['kpiSede', 'kpiSedeSem', 'kpiSedeVar'], canal: 'Sede' },
-    { ids:['kpiHome', 'kpiHomeSem', 'kpiHomeVar'], canal: 'Home Agent' },
-    { ids:['kpiHag',  'kpiHagSem',  'kpiHagVar'],  canal: 'HAG' },
   ].forEach(({ ids, canal }) => {
     const { total, semAtu, varTxt, varCls } = calcKPI(d, canal, band);
     document.getElementById(ids[0]).textContent = total.toLocaleString('pt-BR');
@@ -666,9 +636,9 @@ const DOUGHNUT_OPTS = {
 };
 
 function atualizarGraficos(d) {
-  // Ranking consultores (excl. Home Agent) top 15
+  // Ranking consultores top 15
   const rank = {};
-  d.filter(r => r.canal_venda !== 'Home Agent').forEach(r => {
+  d.forEach(r => {
     if (r.consultor) rank[r.consultor] = (rank[r.consultor] || 0) + 1;
   });
   const sorted = Object.entries(rank).sort((a,b) => b[1]-a[1]).slice(0, 15);
@@ -692,34 +662,40 @@ function atualizarGraficos(d) {
     }
   });
 
-  // Canal rosca
-  const cSede = d.filter(r => r.canal_venda === 'Sede').length;
-  const cHome = d.filter(r => r.canal_venda === 'Home Agent').length;
-  const cHag  = d.filter(r => r.canal_venda === 'HAG').length;
+  // Bandeira rosca
+  const bUna = d.filter(r => r.bandeira === 'Uniasselvi').length;
+  const bUni = d.filter(r => r.bandeira === 'UNICESUMAR').length;
   if (chartCanalInst) chartCanalInst.destroy();
   chartCanalInst = new Chart(document.getElementById('chartCanal'), {
     type: 'doughnut',
     data: {
-      labels: ['Sede','Home Agent','HAG'],
-      datasets: [{ data: [cSede,cHome,cHag], backgroundColor: ['#8B5CF6','#3B82F6','#F59E0B'], borderColor: '#1A0D38', borderWidth: 3, hoverOffset: 6 }]
+      labels: ['Uniasselvi','UNICESUMAR'],
+      datasets: [{ data: [bUna, bUni], backgroundColor: ['#FFD400','#3B8DD4'], borderColor: '#1A0D38', borderWidth: 3, hoverOffset: 6 }]
     },
     options: DOUGHNUT_OPTS
   });
 
   // Produto rosca
-  const pPos  = d.filter(r => r.produto === 'Pós Graduação').length;
-  const pTec  = d.filter(r => r.produto === 'Técnico').length;
-  const pProf = d.filter(r => r.produto === 'Profissionalizante').length;
-  const pOut  = d.length - pPos - pTec - pProf;
-  const prodLabels = ['Pós Graduação','Técnico','Profissionalizante'];
-  const prodData   = [pPos, pTec, pProf];
+  const allProds = ['Pós Graduação','Pós Híbrida','Pós Medicina','Técnico','Profissionalizante'];
+  const prodCores = ['#8B5CF6','#EC4899','#F59E0B','#F5C518','#2ECC71'];
+  const prodLabels = [], prodData = [];
+  allProds.forEach((p, i) => {
+    const n = d.filter(r => r.produto === p).length;
+    if (n > 0) { prodLabels.push(p); prodData.push(n); }
+  });
+  const contados = prodData.reduce((s,v) => s+v, 0);
+  const pOut = d.length - contados;
   if (pOut > 0) { prodLabels.push('Outros'); prodData.push(pOut); }
+  const coresFiltradas = prodLabels.map(l => {
+    const idx = allProds.indexOf(l);
+    return idx >= 0 ? prodCores[idx] : '#94A3B8';
+  });
   if (chartProdInst) chartProdInst.destroy();
   chartProdInst = new Chart(document.getElementById('chartProduto'), {
     type: 'doughnut',
     data: {
       labels: prodLabels,
-      datasets: [{ data: prodData, backgroundColor: ['#8B5CF6','#F5C518','#2ECC71','#F59E0B'], borderColor: '#1A0D38', borderWidth: 3, hoverOffset: 6 }]
+      datasets: [{ data: prodData, backgroundColor: coresFiltradas, borderColor: '#1A0D38', borderWidth: 3, hoverOffset: 6 }]
     },
     options: DOUGHNUT_OPTS
   });
@@ -762,10 +738,9 @@ function atualizarEvolucao(d) {
   d.forEach(r => {
     const k = periodoKey(r.data_matricula, modoEvolucao);
     if (!k) return;
-    if (!periodos[k]) periodos[k] = { sede:0, home:0, hag:0 };
-    if (r.canal_venda === 'Sede')           periodos[k].sede++;
-    else if (r.canal_venda === 'Home Agent') periodos[k].home++;
-    else if (r.canal_venda === 'HAG')        periodos[k].hag++;
+    if (!periodos[k]) periodos[k] = { una:0, uni:0 };
+    if (r.bandeira === 'Uniasselvi')  periodos[k].una++;
+    else if (r.bandeira === 'UNICESUMAR') periodos[k].uni++;
   });
 
   const keys = Object.keys(periodos).sort().slice(-24);
@@ -777,9 +752,8 @@ function atualizarEvolucao(d) {
     data: {
       labels,
       datasets: [
-        { label:'Sede',       data: keys.map(k=>periodos[k].sede), borderColor:'#8B5CF6', backgroundColor:'rgba(139,92,246,.1)',  tension:.3, fill:true, pointRadius:3 },
-        { label:'Home Agent', data: keys.map(k=>periodos[k].home), borderColor:'#3B82F6', backgroundColor:'rgba(59,130,246,.08)', tension:.3, fill:true, pointRadius:3 },
-        { label:'HAG',        data: keys.map(k=>periodos[k].hag),  borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,.08)', tension:.3, fill:true, pointRadius:3 },
+        { label:'Uniasselvi', data: keys.map(k=>periodos[k].una), borderColor:'#FFD400', backgroundColor:'rgba(255,212,0,.1)',  tension:.3, fill:true, pointRadius:3 },
+        { label:'UNICESUMAR', data: keys.map(k=>periodos[k].uni), borderColor:'#3B8DD4', backgroundColor:'rgba(59,141,212,.08)', tension:.3, fill:true, pointRadius:3 },
       ]
     },
     options: {
@@ -798,38 +772,34 @@ function atualizarEvolucao(d) {
 
 // ─── Tabela volume por produto ────────────────────────────────────────────────
 function atualizarProdTable(d) {
-  const produtos = ['Pós Graduação','Técnico','Profissionalizante'];
+  const produtos = ['Pós Graduação','Pós Híbrida','Pós Medicina','Técnico','Profissionalizante'];
   const total = d.length;
   const rows = produtos.map(p => {
-    const sede = d.filter(r => r.produto === p && r.canal_venda === 'Sede').length;
-    const home = d.filter(r => r.produto === p && r.canal_venda === 'Home Agent').length;
-    const hag  = d.filter(r => r.produto === p && r.canal_venda === 'HAG').length;
-    const tot  = sede + home + hag;
-    const pct  = total > 0 ? Math.round(tot / total * 100) : 0;
-    return { p, sede, home, hag, tot, pct };
-  });
+    const una = d.filter(r => r.produto === p && r.bandeira === 'Uniasselvi').length;
+    const uni = d.filter(r => r.produto === p && r.bandeira === 'UNICESUMAR').length;
+    const tot = una + uni;
+    const pct = total > 0 ? Math.round(tot / total * 100) : 0;
+    return { p, una, uni, tot, pct };
+  }).filter(r => r.tot > 0);
 
-  const tSede = rows.reduce((s,r) => s+r.sede, 0);
-  const tHome = rows.reduce((s,r) => s+r.home, 0);
-  const tHag  = rows.reduce((s,r) => s+r.hag,  0);
-  const tTot  = tSede + tHome + tHag;
+  const tUna = rows.reduce((s,r) => s+r.una, 0);
+  const tUni = rows.reduce((s,r) => s+r.uni, 0);
+  const tTot = tUna + tUni;
 
   document.getElementById('prodTableBody').innerHTML =
     rows.map(r =>
       `<tr>
         <td>${r.p}</td>
-        <td class="prod-num">${r.sede.toLocaleString('pt-BR')}</td>
-        <td class="prod-num">${r.home.toLocaleString('pt-BR')}</td>
-        <td class="prod-num">${r.hag.toLocaleString('pt-BR')}</td>
+        <td class="prod-num">${r.una.toLocaleString('pt-BR')}</td>
+        <td class="prod-num">${r.uni.toLocaleString('pt-BR')}</td>
         <td class="prod-num">${r.tot.toLocaleString('pt-BR')}</td>
         <td class="prod-pct">${r.pct}%</td>
       </tr>`
     ).join('') +
     `<tr style="border-top:2px solid var(--borda-f)">
       <td style="color:var(--txt2);font-family:'Nunito',sans-serif;font-weight:800">Total</td>
-      <td class="prod-num" style="color:var(--txt)">${tSede.toLocaleString('pt-BR')}</td>
-      <td class="prod-num" style="color:var(--txt)">${tHome.toLocaleString('pt-BR')}</td>
-      <td class="prod-num" style="color:var(--txt)">${tHag.toLocaleString('pt-BR')}</td>
+      <td class="prod-num" style="color:var(--txt)">${tUna.toLocaleString('pt-BR')}</td>
+      <td class="prod-num" style="color:var(--txt)">${tUni.toLocaleString('pt-BR')}</td>
       <td class="prod-num" style="color:var(--txt)">${tTot.toLocaleString('pt-BR')}</td>
       <td class="prod-pct">100%</td>
     </tr>`;
@@ -838,7 +808,6 @@ function atualizarProdTable(d) {
 // ─── Filtros ─────────────────────────────────────────────────────────────────
 function getFiltrado() {
   const fB  = document.getElementById('fBandeira').value;
-  const fCa = document.getElementById('fCanal').value;
   const fP  = document.getElementById('fProduto').value;
   const fPr = document.getElementById('fProcesso').value;
   const fC  = document.getElementById('fConsultor').value;
@@ -847,7 +816,6 @@ function getFiltrado() {
 
   return todosRegistros.filter(r => {
     if (fB  && r.bandeira          !== fB)  return false;
-    if (fCa && r.canal_venda       !== fCa) return false;
     if (fP  && r.produto           !== fP)  return false;
     if (fPr && r.processo_seletivo !== fPr) return false;
     if (fC  && r.consultor         !== fC)  return false;
@@ -866,7 +834,7 @@ function aplicarFiltros() {
 }
 
 function limparFiltros() {
-  ['fBandeira','fCanal','fProduto','fProcesso','fDe','fAte'].forEach(id => {
+  ['fBandeira','fProduto','fProcesso','fDe','fAte'].forEach(id => {
     document.getElementById(id).value = '';
   });
   document.getElementById('fConsultor').value = '';
