@@ -373,10 +373,16 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
                placeholder="Ticket (Blip) ou link da conversa (OmniChat)" required autocomplete="off">
       </div>
 
-      <!-- 11. Tipo de Conversão -->
-      <div class="group">
-        <label class="label"><span class="num">11</span> Tipo de Conversão</label>
-        <input class="ctrl" type="text" id="tipoConversao" placeholder="Ex.: Ativo, Receptivo, Indicação...">
+      <!-- 11. Tipo de Conversão (apenas UNICESUMAR) -->
+      <div class="group" id="groupTipoConversao" style="display:none">
+        <label class="label"><span class="num">11</span> Tipo de Conversão <span class="req">*</span></label>
+        <div class="sw">
+          <select class="ctrl" id="tipoConversao">
+            <option value="">Selecione</option>
+            <option value="ACELERADOR">ACELERADOR</option>
+            <option value="TOPO DE FUNIL">TOPO DE FUNIL</option>
+          </select>
+        </div>
       </div>
 
       <!-- 12. Canal de Venda -->
@@ -440,16 +446,23 @@ function toastMsg(msg, cor = '#2ECC71') {
 function onBandeiraChange() {
   const val = document.getElementById('bandeira').value;
   const badge = document.getElementById('bandeiraBadge');
+  const groupTC = document.getElementById('groupTipoConversao');
+
   if (val === 'Uniasselvi') {
     badge.className = 'bandeira-badge uni';
     badge.textContent = 'Uniasselvi';
     badge.style.display = 'inline-flex';
+    groupTC.style.display = 'none';
+    document.getElementById('tipoConversao').value = '';
   } else if (val === 'UNICESUMAR') {
     badge.className = 'bandeira-badge unicesumar';
     badge.textContent = 'UNICESUMAR';
     badge.style.display = 'inline-flex';
+    groupTC.style.display = 'flex';
   } else {
     badge.style.display = 'none';
+    groupTC.style.display = 'none';
+    document.getElementById('tipoConversao').value = '';
   }
 }
 
@@ -480,6 +493,7 @@ function limpar() {
    'polo','produto','produtoShopee','status','ticketLink','tipoConversao','canalVenda']
     .forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('groupShopee').style.display = 'none';
+  document.getElementById('groupTipoConversao').style.display = 'none';
   document.getElementById('bandeiraBadge').style.display = 'none';
 }
 
@@ -495,12 +509,17 @@ async function registrar() {
   const produto       = document.getElementById('produto').value;
   const status        = document.getElementById('status').value;
   const ticketLink    = document.getElementById('ticketLink').value.trim();
-  const tipoConversao = document.getElementById('tipoConversao').value.trim();
+  const tipoConversao = document.getElementById('tipoConversao').value;
   const canalVenda    = document.getElementById('canalVenda').value;
 
   if (!consultor || !bandeira || !dataMatricula || !celular || !nomeAluno ||
       !polo || !produto || !status || !ticketLink || !canalVenda) {
     toastMsg('⚠ Preencha todos os campos obrigatórios.', '#FF5555');
+    return;
+  }
+
+  if (bandeira === 'UNICESUMAR' && !tipoConversao) {
+    toastMsg('⚠ Selecione o Tipo de Conversão para UNICESUMAR.', '#FF5555');
     return;
   }
 
