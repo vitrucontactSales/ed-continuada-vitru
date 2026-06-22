@@ -260,6 +260,32 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
 .btn-s { background: var(--card2); color: var(--txt2); border: 1.5px solid var(--borda-f); }
 .btn-s:hover { background: var(--borda); }
 
+/* Matrícula inline edit */
+.mat-val { display: flex; align-items: center; gap: 6px; }
+.mat-edit-btn {
+  background: none; border: none; cursor: pointer; color: var(--txt3);
+  padding: 2px 5px; border-radius: 4px; font-size: .8rem;
+  opacity: 0; transition: opacity .15s, color .15s; line-height: 1;
+}
+tbody tr:hover .mat-edit-btn { opacity: 1; }
+.mat-edit-btn:hover { color: var(--violet); }
+.mat-inp-wrap { display: flex; align-items: center; gap: 4px; }
+.mat-inp {
+  padding: 4px 8px; border: 1.5px solid var(--violet); border-radius: 6px;
+  background: var(--card2); color: var(--txt); font-size: .8rem;
+  font-family: 'Nunito Sans', sans-serif; width: 120px;
+}
+.mat-inp:focus { outline: none; box-shadow: 0 0 0 2px rgba(139,92,246,.25); }
+.mat-ok, .mat-cancel {
+  border: none; cursor: pointer; padding: 3px 7px;
+  border-radius: 5px; font-size: .78rem; font-weight: 700; line-height: 1.4;
+}
+.mat-ok     { background: rgba(46,204,113,.2); color: #2ECC71; }
+.mat-ok:hover    { background: rgba(46,204,113,.4); }
+.mat-cancel { background: rgba(255,85,85,.15); color: #FF5555; }
+.mat-cancel:hover { background: rgba(255,85,85,.3); }
+.mat-ok:disabled, .mat-cancel:disabled { opacity: .4; cursor: not-allowed; }
+
 /* Loading bar */
 .loading-bar {
   height: 3px; background: linear-gradient(90deg, var(--violet), var(--gold));
@@ -421,6 +447,7 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
             <th>Bandeira</th>
             <th>Data Matrícula</th>
             <th>Nome / ID Aluno</th>
+            <th>Matrícula</th>
             <th>Produto</th>
             <th>Status</th>
             <th>Canal</th>
@@ -429,7 +456,7 @@ tbody td { padding: 9px 14px; color: var(--txt); vertical-align: middle; white-s
           </tr>
         </thead>
         <tbody id="tbody">
-          <tr><td colspan="10" class="msg-estado">Carregando dados...</td></tr>
+          <tr><td colspan="11" class="msg-estado">Carregando dados...</td></tr>
         </tbody>
       </table>
     </div>
@@ -905,7 +932,7 @@ function renderTabela(d) {
     `${d.length.toLocaleString('pt-BR')} registro${d.length !== 1 ? 's' : ''}`;
 
   if (!d.length) {
-    tbody.innerHTML = `<tr><td colspan="10" class="msg-estado">Nenhum registro encontrado.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="11" class="msg-estado">Nenhum registro encontrado.</td></tr>`;
     atualizarPaginacao(0); return;
   }
 
@@ -917,6 +944,15 @@ function renderTabela(d) {
       <td>${bandBadge(r.bandeira)}</td>
       <td>${fmtData(r.data_matricula)}</td>
       <td class="td-dim" style="max-width:160px;overflow:hidden;text-overflow:ellipsis">${r.nome_aluno || '—'}</td>
+      <td class="mat-cell">
+        <span class="mat-val">
+          <span>${r.matricula || '—'}</span>
+          <button class="mat-edit-btn"
+                  data-id="${r.id}"
+                  data-orig="${(r.matricula||'').replace(/"/g,'&quot;')}"
+                  onclick="abrirEditMat(this)" title="Editar matrícula">✏</button>
+        </span>
+      </td>
       <td class="td-dim">${r.produto || '—'}</td>
       <td>
         <select class="ssel ${sClass(r.status)}"
@@ -971,6 +1007,71 @@ async function atualizarStatus(sel) {
   atualizarKPIs(dadosFiltrados);
   atualizarGraficos(dadosFiltrados);
   toast('✔ Status atualizado!');
+}
+
+// ─── Matrícula inline edit ────────────────────────────────────────────────────
+function abrirEditMat(btn) {
+  const cell = btn.closest('td');
+  const id   = btn.dataset.id;
+  const orig = btn.dataset.orig;
+  cell.innerHTML = `
+    <div class="mat-inp-wrap">
+      <input class="mat-inp" type="text"
+             id="mat-inp-${id}"
+             data-id="${id}"
+             data-orig="${orig.replace(/"/g,'&quot;')}"
+             value="${orig.replace(/"/g,'&quot;')}"
+             onkeydown="matKeydown(event,this)"
+             placeholder="Nº matrícula">
+      <button class="mat-ok"    onclick="salvarMat(this.closest('.mat-inp-wrap').querySelector('.mat-inp'))" title="Salvar">✔</button>
+      <button class="mat-cancel" onclick="cancelarMat(this.closest('.mat-inp-wrap').querySelector('.mat-inp'))" title="Cancelar">✗</button>
+    </div>`;
+  const inp = document.getElementById(`mat-inp-${id}`);
+  inp.focus(); inp.select();
+}
+
+function matKeydown(e, inp) {
+  if (e.key === 'Enter')  { e.preventDefault(); salvarMat(inp); }
+  if (e.key === 'Escape') cancelarMat(inp);
+}
+
+function _matCellNormal(id, valor) {
+  const display  = valor || '—';
+  const safeOrig = (valor||'').replace(/"/g,'&quot;');
+  return `<span class="mat-val">
+    <span>${display}</span>
+    <button class="mat-edit-btn" data-id="${id}" data-orig="${safeOrig}"
+            onclick="abrirEditMat(this)" title="Editar matrícula">✏</button>
+  </span>`;
+}
+
+async function salvarMat(inp) {
+  const id   = inp.dataset.id;
+  const novo = inp.value.trim();
+  const cell = inp.closest('td');
+
+  inp.disabled = true;
+  cell.querySelectorAll('button').forEach(b => b.disabled = true);
+
+  const { error } = await db.from('matriculas_ed_cont').update({ matricula: novo || null }).eq('id', id);
+
+  if (error) {
+    inp.disabled = false;
+    cell.querySelectorAll('button').forEach(b => b.disabled = false);
+    toast('Erro ao salvar matrícula.', '#FF5555'); return;
+  }
+
+  const reg = todosRegistros.find(r => r.id === id);
+  if (reg) reg.matricula = novo || null;
+
+  cell.innerHTML = _matCellNormal(id, novo);
+  toast('✔ Matrícula atualizada!');
+}
+
+function cancelarMat(inp) {
+  const id   = inp.dataset.id;
+  const orig = inp.dataset.orig;
+  inp.closest('td').innerHTML = _matCellNormal(id, orig);
 }
 
 // ─── Exportar CSV ─────────────────────────────────────────────────────────────
