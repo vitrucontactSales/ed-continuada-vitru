@@ -469,18 +469,22 @@ tbody tr:hover .mat-edit-btn { opacity: 1; }
 
 </div>
 
-<!-- Modal senha -->
+<!-- Modal login -->
 <div class="modal-overlay" id="modalSenha">
   <div class="modal-box">
     <h3>🔒 Acesso ao Dashboard</h3>
-    <p>Digite a senha para visualizar o painel analítico.</p>
+    <p>Entre com seu email e senha corporativos.</p>
+    <input class="modal-input" type="email" id="inputEmail"
+           placeholder="Email corporativo"
+           onkeydown="if(event.key==='Enter')document.getElementById('inputSenha').focus()"
+           oninput="document.getElementById('errSenha').style.display='none'">
     <input class="modal-input" type="password" id="inputSenha"
            placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenha()"
            oninput="document.getElementById('errSenha').style.display='none'">
-    <div class="modal-erro" id="errSenha">Senha incorreta. Tente novamente.</div>
+    <div class="modal-erro" id="errSenha">Email ou senha incorretos.</div>
     <div class="modal-btns">
       <button class="btn btn-s" onclick="window.location.href='index.html'">Cancelar</button>
-      <button class="btn btn-p" onclick="verificarSenha()">Entrar</button>
+      <button class="btn btn-p" id="btnEntrar" onclick="verificarSenha()">Entrar</button>
     </div>
   </div>
 </div>
@@ -490,32 +494,43 @@ tbody tr:hover .mat-edit-btn { opacity: 1; }
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script>
-const SUPABASE_URL  = 'https://hnzjveincaygawjttngv.supabase.co';
-const SUPABASE_KEY  = 'sb_publishable_us2dvtADt7a7yk8SBXZPUA_gugW3otS';
-const SENHA_SISTEMA = 'EdCont@2026';
-const POR_PAGINA    = 50;
+const SUPABASE_URL = 'https://hnzjveincaygawjttngv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_us2dvtADt7a7yk8SBXZPUA_gugW3otS';
+const POR_PAGINA   = 50;
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
-if (sessionStorage.getItem('edcont_auth') !== '1') {
-  document.getElementById('modalSenha').classList.add('show');
-}
+async function verificarSenha() {
+  const email = document.getElementById('inputEmail').value.trim();
+  const senha = document.getElementById('inputSenha').value;
+  const errEl = document.getElementById('errSenha');
+  const btn   = document.getElementById('btnEntrar');
 
-function verificarSenha() {
-  if (document.getElementById('inputSenha').value === SENHA_SISTEMA) {
-    sessionStorage.setItem('edcont_auth', '1');
-    document.getElementById('modalSenha').classList.remove('show');
-    carregar();
-  } else {
-    document.getElementById('errSenha').style.display = 'block';
+  errEl.style.display = 'none';
+  if (!email || !senha) {
+    errEl.textContent = 'Preencha email e senha.';
+    errEl.style.display = 'block'; return;
+  }
+
+  btn.disabled = true; btn.textContent = '⏳ Entrando...';
+  const { error } = await db.auth.signInWithPassword({ email, password: senha });
+  btn.disabled = false; btn.textContent = 'Entrar';
+
+  if (error) {
+    errEl.textContent = 'Email ou senha incorretos.';
+    errEl.style.display = 'block';
     document.getElementById('inputSenha').value = '';
     document.getElementById('inputSenha').focus();
+    return;
   }
+
+  document.getElementById('modalSenha').classList.remove('show');
+  carregar();
 }
 
-function sair() {
-  sessionStorage.removeItem('edcont_auth');
+async function sair() {
+  await db.auth.signOut();
   window.location.href = 'index.html';
 }
 
@@ -1106,7 +1121,7 @@ async function carregar() {
 
     if (error) {
       document.getElementById('tbody').innerHTML =
-        `<tr><td colspan="10" class="msg-estado">❌ Erro ao carregar. Verifique a conexão.</td></tr>`;
+        `<tr><td colspan="11" class="msg-estado">❌ Erro ao carregar. Verifique a conexão.</td></tr>`;
       bar.style.width = '0%'; return;
     }
     if (!data || data.length === 0) break;
@@ -1125,7 +1140,15 @@ async function carregar() {
 }
 
 // Init
-if (sessionStorage.getItem('edcont_auth') === '1') carregar();
+(async () => {
+  const { data: { session } } = await db.auth.getSession();
+  if (!session) {
+    document.getElementById('modalSenha').classList.add('show');
+    setTimeout(() => document.getElementById('inputEmail').focus(), 150);
+  } else {
+    carregar();
+  }
+})();
 </script>
 </body>
 </html>
