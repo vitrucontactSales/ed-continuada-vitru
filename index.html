@@ -432,18 +432,6 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
         </div>
       </div>
 
-      <!-- 12. Canal de Venda -->
-      <div class="group">
-        <label class="label"><span class="num">12</span> Canal de Venda <span class="req">*</span></label>
-        <div class="sw">
-          <select class="ctrl" id="canalVenda" required>
-            <option value="">Selecione o Canal</option>
-            <option value="Sede">Sede</option>
-            <option value="HAG">HAG</option>
-            <option value="Home Agent">Home Agent</option>
-          </select>
-        </div>
-      </div>
 
     </div>
     <div class="foot">
@@ -457,14 +445,18 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
 <div class="modal-overlay" id="modalSenhaColab">
   <div class="modal-box">
     <h3>🔒 Área Restrita</h3>
-    <p>Digite a senha para cadastrar um novo colaborador.</p>
+    <p>Entre com seu email e senha corporativos.</p>
+    <input class="modal-input" type="email" id="inputEmailColab"
+           placeholder="Email corporativo"
+           onkeydown="if(event.key==='Enter')document.getElementById('inputSenhaColab').focus()"
+           oninput="document.getElementById('errSenhaColab').style.display='none'">
     <input class="modal-input" type="password" id="inputSenhaColab"
            placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenhaColab()"
            oninput="document.getElementById('errSenhaColab').style.display='none'">
-    <div class="modal-erro" id="errSenhaColab">Senha incorreta. Tente novamente.</div>
+    <div class="modal-erro" id="errSenhaColab">Email ou senha incorretos.</div>
     <div class="modal-btns">
       <button class="btn btn-s" onclick="document.getElementById('modalSenhaColab').classList.remove('show')">Cancelar</button>
-      <button class="btn btn-p" onclick="verificarSenhaColab()">Entrar</button>
+      <button class="btn btn-p" id="btnEntrarColab" onclick="verificarSenhaColab()">Entrar</button>
     </div>
   </div>
 </div>
@@ -535,29 +527,14 @@ textarea.ctrl { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
-<!-- Modal Dashboard -->
-<div class="modal-overlay" id="modalSenha">
-  <div class="modal-box">
-    <h3>🔒 Acesso ao Dashboard</h3>
-    <p>Digite a senha para visualizar o painel.</p>
-    <input class="modal-input" type="password" id="inputSenha"
-           placeholder="Senha" onkeydown="if(event.key==='Enter')verificarSenha()">
-    <div class="modal-erro" id="errSenha">Senha incorreta. Tente novamente.</div>
-    <div class="modal-btns">
-      <button class="btn btn-s" onclick="fecharModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="verificarSenha()">Entrar</button>
-    </div>
-  </div>
-</div>
 
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL  = 'https://hnzjveincaygawjttngv.supabase.co';
-const SUPABASE_KEY  = 'sb_publishable_us2dvtADt7a7yk8SBXZPUA_gugW3otS';
-const SENHA_SISTEMA = 'EdCont@2026';
-const DADOS_KEY     = 'vitru_ed_cont_v1';
+const SUPABASE_URL = 'https://hnzjveincaygawjttngv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_us2dvtADt7a7yk8SBXZPUA_gugW3otS';
+const DADOS_KEY    = 'vitru_ed_cont_v1';
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -619,7 +596,7 @@ function getProdutoFinal() {
 // ── Limpar ──
 function limpar() {
   ['consultor','bandeira','dataMatricula','celular','nomeAluno','matricula',
-   'polo','produto','produtoShopee','status','ticketLink','tipoConversao','canalVenda']
+   'polo','produto','produtoShopee','status','ticketLink','tipoConversao']
     .forEach(id => { document.getElementById(id).value = ''; });
   document.getElementById('groupShopee').style.display = 'none';
   document.getElementById('groupTipoConversao').style.display = 'none';
@@ -639,10 +616,8 @@ async function registrar() {
   const status        = document.getElementById('status').value;
   const ticketLink    = document.getElementById('ticketLink').value.trim();
   const tipoConversao = document.getElementById('tipoConversao').value;
-  const canalVenda    = document.getElementById('canalVenda').value;
-
   if (!consultor || !bandeira || !dataMatricula || !celular || !nomeAluno ||
-      !polo || !produto || !status || !ticketLink || !canalVenda) {
+      !polo || !produto || !status || !ticketLink) {
     toastMsg('⚠ Preencha todos os campos obrigatórios.', '#FF5555');
     return;
   }
@@ -668,7 +643,7 @@ async function registrar() {
   const agora = new Date().toLocaleString('pt-BR');
   dados.push({ id, consultor, bandeira, dataMatricula, celular, nomeAluno,
                matricula, polo, produto: produtoFinal, status, ticketLink,
-               tipoConversao, canalVenda, registrado_em: agora });
+               tipoConversao, canalVenda: 'Sede', registrado_em: agora });
   localStorage.setItem(DADOS_KEY, JSON.stringify(dados));
 
   // Salva no Supabase (quando configurado)
@@ -684,7 +659,7 @@ async function registrar() {
           ? document.getElementById('produtoShopee').value.trim() : null,
         status, ticket_link: ticketLink,
         tipo_conversao: tipoConversao,
-        canal_venda: canalVenda
+        canal_venda: 'Sede'
       });
       if (error) throw error;
     } catch (err) {
@@ -726,23 +701,47 @@ function reordenarConsultores() {
   sel.insertBefore(placeholder, sel.options[0]);
 }
 
-function abrirModalSenhaColab() {
-  document.getElementById('inputSenhaColab').value = '';
-  document.getElementById('errSenhaColab').style.display = 'none';
-  document.getElementById('modalSenhaColab').classList.add('show');
-  setTimeout(() => document.getElementById('inputSenhaColab').focus(), 100);
-}
-
-function verificarSenhaColab() {
-  if (document.getElementById('inputSenhaColab').value === SENHA_SISTEMA) {
-    document.getElementById('modalSenhaColab').classList.remove('show');
+async function abrirModalSenhaColab() {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
     limparFormColab();
     document.getElementById('modalColaborador').classList.add('show');
   } else {
-    document.getElementById('errSenhaColab').style.display = 'block';
+    document.getElementById('inputEmailColab').value = '';
+    document.getElementById('inputSenhaColab').value = '';
+    document.getElementById('errSenhaColab').style.display = 'none';
+    document.getElementById('modalSenhaColab').classList.add('show');
+    setTimeout(() => document.getElementById('inputEmailColab').focus(), 100);
+  }
+}
+
+async function verificarSenhaColab() {
+  const email = document.getElementById('inputEmailColab').value.trim();
+  const senha = document.getElementById('inputSenhaColab').value;
+  const errEl = document.getElementById('errSenhaColab');
+  const btn   = document.getElementById('btnEntrarColab');
+
+  errEl.style.display = 'none';
+  if (!email || !senha) {
+    errEl.textContent = 'Preencha email e senha.';
+    errEl.style.display = 'block'; return;
+  }
+
+  btn.disabled = true; btn.textContent = '⏳ Entrando...';
+  const { error } = await db.auth.signInWithPassword({ email, password: senha });
+  btn.disabled = false; btn.textContent = 'Entrar';
+
+  if (error) {
+    errEl.textContent = 'Email ou senha incorretos.';
+    errEl.style.display = 'block';
     document.getElementById('inputSenhaColab').value = '';
     document.getElementById('inputSenhaColab').focus();
+    return;
   }
+
+  document.getElementById('modalSenhaColab').classList.remove('show');
+  limparFormColab();
+  document.getElementById('modalColaborador').classList.add('show');
 }
 
 function fecharModalColab() {
@@ -794,18 +793,6 @@ function cadastrarColaborador() {
 // Carregar colaboradores extras ao iniciar
 carregarColaboradoresExtras();
 
-// ── Dashboard ──
-function fecharModal() { document.getElementById('modalSenha').classList.remove('show'); }
-function verificarSenha() {
-  if (document.getElementById('inputSenha').value === SENHA_SISTEMA) {
-    sessionStorage.setItem('edcont_auth', '1');
-    window.location.href = 'dashboard.html';
-  } else {
-    document.getElementById('errSenha').style.display = 'block';
-    document.getElementById('inputSenha').value = '';
-    document.getElementById('inputSenha').focus();
-  }
-}
 </script>
 </body>
 </html>
