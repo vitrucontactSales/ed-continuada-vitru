@@ -677,18 +677,24 @@ async function registrar() {
 // ── Colaboradores ──
 const COLAB_KEY = 'vitru_colaboradores_v1';
 
-function carregarColaboradoresExtras() {
-  const extras = JSON.parse(localStorage.getItem(COLAB_KEY) || '[]');
+async function carregarColaboradoresExtras() {
   const sel = document.getElementById('consultor');
   const existentes = new Set(Array.from(sel.options).map(o => o.value.toLowerCase()));
-  extras.forEach(c => {
-    if (c.nome && !existentes.has(c.nome.toLowerCase())) {
-      const o = document.createElement('option');
-      o.value = c.nome; o.textContent = c.nome;
-      sel.appendChild(o);
-      existentes.add(c.nome.toLowerCase());
+
+  try {
+    const { data } = await db.from('colaboradores_ed_cont').select('nome').order('nome');
+    if (data) {
+      data.forEach(c => {
+        if (c.nome && !existentes.has(c.nome.toLowerCase())) {
+          const o = document.createElement('option');
+          o.value = c.nome; o.textContent = c.nome;
+          sel.appendChild(o);
+          existentes.add(c.nome.toLowerCase());
+        }
+      });
     }
-  });
+  } catch (e) {}
+
   reordenarConsultores();
 }
 
@@ -754,7 +760,7 @@ function limparFormColab() {
     .forEach(id => { document.getElementById(id).value = ''; });
 }
 
-function cadastrarColaborador() {
+async function cadastrarColaborador() {
   const nome      = document.getElementById('colabNome').value.trim();
   const email     = document.getElementById('colabEmail').value.trim();
   const matricula = document.getElementById('colabMatricula').value.trim();
@@ -776,16 +782,23 @@ function cadastrarColaborador() {
   const btn = document.getElementById('btnCadastrarColab');
   btn.disabled = true; btn.textContent = '⏳ Salvando...';
 
-  const extras = JSON.parse(localStorage.getItem(COLAB_KEY) || '[]');
-  extras.push({ nome, email, matricula, gestor, admissao, canal, bandeira, cadastrado_em: new Date().toISOString() });
-  localStorage.setItem(COLAB_KEY, JSON.stringify(extras));
+  const { error } = await db.from('colaboradores_ed_cont').insert({
+    nome, email, matricula, gestor,
+    data_admissao: admissao || null,
+    canal, bandeira
+  });
+
+  btn.disabled = false; btn.textContent = '✔ Cadastrar';
+
+  if (error) {
+    toastMsg('❌ Erro ao salvar colaborador. Tente novamente.', '#FF5555'); return;
+  }
 
   const o = document.createElement('option');
   o.value = nome; o.textContent = nome;
   sel.appendChild(o);
   reordenarConsultores();
 
-  btn.disabled = false; btn.textContent = '✔ Cadastrar';
   fecharModalColab();
   toastMsg(`✦ ${nome} cadastrado(a) com sucesso!`);
 }
